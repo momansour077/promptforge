@@ -1,0 +1,295 @@
+{
+  "generatedAt": "2026-04-28T08:01:03.249Z",
+  "version": 1,
+  "seedCount": 12,
+  "records": [
+    {
+      "id": "en_product_words_app",
+      "inputSeed": "kids word app",
+      "taskType": "CODE_GENERATION",
+      "targetModel": "GENERAL",
+      "language": "en",
+      "detectedLanguage": "en",
+      "promptType": "CODE_GENERATION",
+      "framework": "COAST",
+      "generatedPrompt": "[ROLE]\nYou are a senior full-stack product engineer, educational product designer, and child-safety UX specialist delivering implementation-ready product specifications and build instructions.\n\n[OBJECTIVE]\nTurn the brief into a production-grade product specification and build brief for a safe, engaging children's vocabulary-learning application.\n\n[CONTEXT]\nThe user's real objective is: \"kids word app\". Treat this as a real product request that must be expanded into direct, execution-ready instructions for a software team or advanced AI build system. Resolve missing detail conservatively, make practical assumptions where needed, and keep the result specific, implementation-ready, and immediately usable.\n\n[TASK]\nDesign a production-ready children's vocabulary-learning application based on the brief. Define the target age range, learning outcomes, primary users, parent or teacher roles if helpful, vocabulary content structure, audio and visual practice loops, rewards, revision logic, safety and privacy rules, accessibility requirements, UX flows, screen map, recommended tech stack, system architecture, data model, representative API endpoints and example data objects, offline or graceful-degradation expectations, localization and right-to-left requirements where relevant, MVP scope, delivery phases, future enhancements, and success metrics. Make strong, explicit assumptions when details are missing and continue without asking unnecessary questions.\n\n[DELIVERABLE]\nReturn a structured implementation brief that product, design, engineering, and learning-content teams can use immediately to scope, design, and build the application, including representative API endpoints, example data shapes, and explicit notes on offline and localization behavior where relevant.\n\n[OUTPUT FORMAT]\na structured implementation brief with these exact sections: Product Goal, Target Users, Assumptions, Core Features, Learning Experience, Safety, Accessibility, and Privacy, UX and Screen Structure, Recommended Tech Stack, System Architecture, Data Model, API Design, MVP Delivery Plan, Future Enhancements, Success Metrics\n\n[TONE & STYLE]\nUse a professional, implementation-ready, and audience-aware tone. Write like a senior product and engineering lead handing off work that can be acted on immediately. Favor concrete requirements, practical defaults, and implementation-ready decisions over generic advice.\n\n[DECISION RULES]\nPrefer MVP clarity over feature sprawl. Prefer child safety, privacy, and accessibility over engagement gimmicks. Prefer buildable learning loops over speculative features. Prefer explicit assumptions over open questions. Prefer complete section coverage with concise, high-signal bullets over over-explaining early sections and starving later ones.\n\n[RESPONSE BUDGET]\nFit the entire brief in one complete response. Keep introductory framing minimal, then use concise, high-signal bullets. Aim for 3 to 5 bullets in most sections, and spend the deepest detail on Core Features, Learning Experience, System Architecture, Data Model, API Design, and MVP Delivery Plan. If the response budget feels tight, shorten wording and merge overlapping bullets instead of omitting required sections.\n\n[SUCCESS CRITERIA]\nThe result must be specific enough that real product, design, engineering, and content teams could begin implementation immediately. It must be age-appropriate, technically plausible, privacy-conscious, explicit about assumptions and tradeoffs, and complete enough that no required section is omitted, especially API design, future enhancements, offline behavior, localization expectations, and representative data shapes. Keep the sections concise enough that the full brief fits in one complete response.\n\n[VALIDATION CHECKLIST]\nBefore returning, confirm the brief defines the age range, learning outcomes, child and adult roles, vocabulary content structure, safe engagement loops, accessibility expectations, key screens, architecture, data model, representative APIs, example data objects, offline or graceful-degradation expectations, localization or right-to-left requirements where relevant, MVP scope, future enhancements, and measurable success metrics. Confirm that every section listed in the output format appears once and is substantively filled.\n\n[ASSUMPTION POLICY]\nMake at most three high-impact assumptions. State only the assumptions that materially affect age appropriateness, safety, architecture, content design, or rollout. Prefer conservative child-safe defaults over speculative engagement features.\n\n[VERIFICATION STEPS]\nCheck that every major feature maps to a child or adult user role, every critical flow maps to a screen, every safety or privacy requirement maps to a concrete control, every learning claim maps to content, data, or feedback logic, every representative API maps to a user or system need, every core entity shape supports the stated flows, and any offline or localization requirement maps to UI, storage, and operational behavior.\n\n[ACCEPTANCE TESTS]\nA strong result lets a real team answer yes to: can we scope v1, design the core child journey, define adult oversight, model the data, specify representative endpoints and example payloads, account for offline and localization behavior where relevant, preserve a clear future roadmap, and begin implementation without major clarification or safety gaps?\n\n[CONSTRAINTS]\nDo not include internal framework names, methodology notes, or meta explanations. Replace blurry wording with explicit criteria or thresholds whenever possible. If instructions could conflict, resolve them with a clear decision rule instead of leaving ambiguity. Keep the result specific, implementation-ready, and transparent about assumptions. If the audience is children, keep the experience safe, age-appropriate, privacy-conscious, and accessible.\n\n[FAILURE MODES TO AVOID]\nAvoid generic edtech advice, unsafe child engagement mechanics, feature dumping without prioritization, placeholder APIs or vague data shapes, omitted Future Enhancements, and missing definitions for offline behavior, localization, architecture, data, or success metrics.\n\n[EXAMPLES]\nPrefer zero-shot instructions first. Add examples only if they materially improve format fidelity or remove ambiguity, and keep them tightly matched to the real task.\n\n[EXECUTION APPROACH]\nKeep the response logically ordered, make assumptions explicit only when needed, and verify the final result against the objective, constraints, and success criteria before responding.",
+      "structuralScore": {
+        "rolePresent": 100,
+        "objectivePresent": 100,
+        "outputFormatPresent": 100,
+        "decisionRulesPresent": 100,
+        "wordCount": 862,
+        "sectionCount": 18
+      },
+      "metadata": {
+        "rtlRequired": false,
+        "characterCount": 6544,
+        "arabicCharacterCount": 0
+      }
+    },
+    {
+      "id": "en_code_react_accessibility",
+      "inputSeed": "React accessibility",
+      "taskType": "CODE_GENERATION",
+      "targetModel": "COPILOT",
+      "language": "en",
+      "detectedLanguage": "en",
+      "promptType": "CODE_GENERATION",
+      "framework": "COAST",
+      "generatedPrompt": "[CODE CONTEXT]\nAssume you are working inside a production codebase. Specify the language, architecture constraints, and the tests that must accompany the change.\n\n[ROLE]\nYou are a principal software engineer and meticulous code-generation assistant. Focus on technology.\n\n[OBJECTIVE]\nProduce a technically precise instruction set that drives a downstream AI or engineer toward a correct, production-ready solution in the technology domain.\n\n[CONTEXT]\nThe user's real objective is: \"React accessibility\". Treat it as a direct execution request for an advanced AI system. Resolve missing detail conservatively, preserve domain accuracy, and make the instruction set immediately usable with strong control over quality, scope, and output shape.\n\n[TASK]\nProduce an implementation-ready technical response. Clarify scope, target environment, architecture, constraints, edge cases, verification steps, and acceptance criteria, then execute with production-level precision in the technology domain.\n\n[DELIVERABLE]\nReturn an implementation-ready technical brief or prompt with scope, target environment, architecture, edge cases, verification steps, and acceptance criteria explicitly defined.\n\n[OUTPUT FORMAT]\na complete solution with code, implementation notes, and verification steps\n\n[TONE & STYLE]\nUse a technical and exact tone. Write like a senior technology specialist delivering a result another professional can use immediately. Keep the wording polished, specific, and free of filler. Prefer concrete decisions and direct instructions over abstract advice.\n\n[DECISION RULES]\nPrefer correctness, maintainability, and verifiability over clever shortcuts. Prefer explicit interfaces and edge cases over implied assumptions. Prefer production-safe defaults over speculative optimizations.\n\n[RESPONSE BUDGET]\nKeep the response compact enough to finish in one pass. Use explicit headings and concise bullets where helpful. Spend detail on the parts that control execution quality, and compress setup or repeated explanation. Prioritize scope, environment, constraints, verification, and acceptance criteria over background commentary. Keep code-context instructions especially compact so implementation details stay prominent.\n\n[SUCCESS CRITERIA]\nThe result must be technically correct, bounded, production-ready, and detailed enough that implementation can begin without major clarification.\n\n[VALIDATION CHECKLIST]\nBefore returning, confirm the prompt specifies scope, target environment, architecture, constraints, edge cases, verification steps, and the exact expected output shape.\n\n[ASSUMPTION POLICY]\nMake at most three high-impact assumptions. State only the assumptions that materially affect environment, architecture, dependencies, security, or runtime behavior. Prefer production-safe defaults over convenience shortcuts.\n\n[VERIFICATION STEPS]\nBefore finalizing, verify technical correctness, dependency realism, runtime assumptions, edge cases, security or accessibility concerns where relevant, and whether the requested output can be implemented and tested directly.\n\n[ACCEPTANCE TESTS]\nA strong result lets a capable engineer answer yes to: is the scope explicit, are implementation constraints clear, are verification steps concrete, and can work begin without major technical clarification?\n\n[CONSTRAINTS]\nStart with the requested deliverable directly and avoid self-referential notes or methodology commentary. Avoid vague language, fabricated facts, and low-signal filler. Replace subjective wording with explicit criteria whenever possible. State assumptions only when they materially affect the result. If the task is technical, preserve exact terminology, APIs, and code identifiers. If the task is visual, include style, lighting, composition, and aspect ratio.\n\n[FAILURE MODES TO AVOID]\nAvoid pseudo-code without implementation detail, invented APIs, skipped edge cases, undefined runtime assumptions, and missing verification steps.\n\n[EXAMPLES]\nPrefer zero-shot instructions first. Add examples only if they materially improve format fidelity or remove ambiguity, and keep them tightly matched to the real task.\n\n[EXECUTION APPROACH]\nKeep the response logically ordered, make assumptions explicit only when needed, and verify the final result against the objective, constraints, and success criteria before responding.",
+      "structuralScore": {
+        "rolePresent": 100,
+        "objectivePresent": 100,
+        "outputFormatPresent": 100,
+        "decisionRulesPresent": 100,
+        "wordCount": 557,
+        "sectionCount": 19
+      },
+      "metadata": {
+        "rtlRequired": false,
+        "characterCount": 4341,
+        "arabicCharacterCount": 0
+      }
+    },
+    {
+      "id": "en_research_b2b_pricing",
+      "inputSeed": "research the best pricing model for a B2B SaaS analytics product",
+      "taskType": "RESEARCH",
+      "targetModel": "GENERAL",
+      "language": "en",
+      "detectedLanguage": "en",
+      "promptType": "RESEARCH",
+      "framework": "CHAIN_OF_THOUGHT",
+      "generatedPrompt": "[ROLE]\nYou are a research strategist who structures evidence-driven investigation. Focus on finance.\n\n[OBJECTIVE]\nProduce a research brief that drives evidence-based investigation and defensible conclusions.\n\n[CONTEXT]\nThe user's real objective is: \"research the best pricing model for a B2B SaaS analytics product\". Treat it as a direct execution request for an advanced AI system. Resolve missing detail conservatively, preserve domain accuracy, and make the instruction set immediately usable with strong control over quality, scope, and output shape.\n\n[TASK]\nInvestigate the topic systematically. Define the research objective, scope, evidence standard, evaluation criteria, uncertainty rules, and output structure, then deliver an evidence-oriented result with clear reasoning and explicit assumptions.\n\n[DELIVERABLE]\nReturn a research brief with scope, source or evidence expectations, uncertainty rules, evaluation criteria, and the required final structure.\n\n[OUTPUT FORMAT]\na structured response with clear sections and concise bullets\n\n[TONE & STYLE]\nUse a clear and balanced tone. Write like a senior finance specialist delivering a result another professional can use immediately. Keep the wording polished, specific, and free of filler. Prefer concrete decisions and direct instructions over abstract advice.\n\n[DECISION RULES]\nPrefer evidence over assertion. Prefer explicit evaluation criteria over post-hoc justification. Prefer uncertainty labeling where claims cannot be made confidently.\n\n[RESPONSE BUDGET]\nKeep the response compact enough to finish in one pass. Use explicit headings and concise bullets where helpful. Spend detail on the parts that control execution quality, and compress setup or repeated explanation. Prioritize research objective, evidence standard, evaluation criteria, recommendation shape, and uncertainty handling over broad background context.\n\n[SUCCESS CRITERIA]\nThe result must be evidence-oriented, explicit about assumptions, and organized so conclusions can be defended and acted on.\n\n[VALIDATION CHECKLIST]\nBefore returning, confirm the prompt defines the research objective, scope, evidence standard, evaluation criteria, uncertainty rules, and final reporting structure.\n\n[ASSUMPTION POLICY]\nMake at most three high-impact assumptions. State only the assumptions that materially affect the evidence base, scope, or interpretation. Label uncertain assumptions explicitly instead of presenting them as facts.\n\n[SOURCE POLICY]\nUse the strongest available evidence standard. Separate observed facts, assumptions, and recommendations clearly. Label uncertainty explicitly whenever a claim cannot be supported confidently.\n\n[VERIFICATION STEPS]\nBefore finalizing, verify evidence traceability, uncertainty labeling, evaluation criteria coverage, and whether recommendations follow from the stated evidence and scope.\n\n[ACCEPTANCE TESTS]\nA strong result lets a researcher answer yes to: is the evidence bar clear, are uncertainty rules explicit, and can the final report be produced without inventing criteria later?\n\n[CONSTRAINTS]\nStart with the requested deliverable directly and avoid self-referential notes or methodology commentary. Avoid vague language, fabricated facts, and low-signal filler. Replace subjective wording with explicit criteria whenever possible. State assumptions only when they materially affect the result. If the task is technical, preserve exact terminology, APIs, and code identifiers. If the task is visual, include style, lighting, composition, and aspect ratio.\n\n[FAILURE MODES TO AVOID]\nAvoid unsupported claims, shallow synthesis, unclear criteria, and recommendations that are not traceable to the evidence.\n\n[EXAMPLES]\nPrefer zero-shot instructions first. Add examples only if they materially improve format fidelity or remove ambiguity, and keep them tightly matched to the real task.\n\n[EXECUTION APPROACH]\nReason privately, check the result against the objective, constraints, and success criteria before responding, and return only the polished final answer unless reasoning is explicitly requested.",
+      "structuralScore": {
+        "rolePresent": 100,
+        "objectivePresent": 100,
+        "outputFormatPresent": 100,
+        "decisionRulesPresent": 100,
+        "wordCount": 540,
+        "sectionCount": 19
+      },
+      "metadata": {
+        "rtlRequired": false,
+        "characterCount": 4084,
+        "arabicCharacterCount": 0
+      }
+    },
+    {
+      "id": "en_image_robotics_poster",
+      "inputSeed": "robotics poster",
+      "taskType": "IMAGE_GENERATION",
+      "targetModel": "MIDJOURNEY",
+      "language": "en",
+      "detectedLanguage": "en",
+      "promptType": "IMAGE_GENERATION",
+      "framework": "TRACE",
+      "generatedPrompt": "[VISUAL PROMPT]\nCreate a high-fidelity visual generation prompt. Define the subject, scene, style, lighting, composition, framing, aspect ratio, and negative prompt guidance wherever useful.\n\n[STYLE]\ncinematic, high-detail, layered, production-quality visuals.\n\n[LIGHTING]\ndramatic balanced lighting that cleanly highlights the primary subject.\n\n[COMPOSITION]\nUse clear visual framing to define focal subject, depth, and background while optimizing phrasing for MIDJOURNEY.\n\n[ASPECT RATIO]\n--ar 16:9\n\n[NEGATIVE PROMPT]\nAvoid clutter, cropped limbs, malformed anatomy, random text, and low-quality textures.\n\n[TONE & STYLE]\nUse a clear and balanced tone. Write like a senior visual design specialist delivering a result another professional can use immediately. Keep the wording polished, specific, and free of filler. Prefer concrete decisions and direct instructions over abstract advice.\n\n[CONSTRAINTS]\nStart with the requested deliverable directly and avoid self-referential notes or methodology commentary. Avoid vague language, fabricated facts, and low-signal filler. Replace subjective wording with explicit criteria whenever possible. State assumptions only when they materially affect the result. If the task is technical, preserve exact terminology, APIs, and code identifiers. If the task is visual, include style, lighting, composition, and aspect ratio.",
+      "structuralScore": {
+        "rolePresent": 0,
+        "objectivePresent": 0,
+        "outputFormatPresent": 0,
+        "decisionRulesPresent": 0,
+        "wordCount": 179,
+        "sectionCount": 8
+      },
+      "metadata": {
+        "rtlRequired": false,
+        "characterCount": 1366,
+        "arabicCharacterCount": 0
+      }
+    },
+    {
+      "id": "en_business_saas_pricing",
+      "inputSeed": "SaaS pricing",
+      "taskType": "BUSINESS",
+      "targetModel": "GENERAL",
+      "language": "en",
+      "detectedLanguage": "en",
+      "promptType": "BUSINESS",
+      "framework": "CARE",
+      "generatedPrompt": "[ROLE]\nYou are a senior business strategist and persuasive communications specialist. Focus on finance.\n\n[OBJECTIVE]\nProduce a business-ready instruction set optimized for decision quality, clarity, and persuasion.\n\n[CONTEXT]\nThe user's real objective is: \"SaaS pricing\". Treat it as a direct execution request for an advanced AI system. Resolve missing detail conservatively, preserve domain accuracy, and make the instruction set immediately usable with strong control over quality, scope, and output shape.\n\n[TASK]\nDevelop the requested business deliverable. Clarify the objective, audience, decision criteria, constraints, and desired outcome, then produce a concise, persuasive, and execution-ready result.\n\n[DELIVERABLE]\nReturn a business-ready brief with audience, decision criteria, constraints, and the exact deliverable structure.\n\n[OUTPUT FORMAT]\na business-ready deliverable with clear headings and action steps\n\n[TONE & STYLE]\nUse a persuasive and executive tone. Write like a senior finance specialist delivering a result another professional can use immediately. Keep the wording polished, specific, and free of filler. Prefer concrete decisions and direct instructions over abstract advice.\n\n[DECISION RULES]\nPrefer decision quality over generic persuasion. Prefer business constraints and audience context over slogans. Prefer prioritized recommendations over brainstorming dumps.\n\n[RESPONSE BUDGET]\nKeep the response compact enough to finish in one pass. Use explicit headings and concise bullets where helpful. Spend detail on the parts that control execution quality, and compress setup or repeated explanation. Prioritize audience, decision criteria, recommendations, and concrete deliverable structure over market-preface commentary.\n\n[SUCCESS CRITERIA]\nThe result must be commercially credible, decision-useful, and specific enough for a professional stakeholder to act on immediately.\n\n[VALIDATION CHECKLIST]\nBefore returning, confirm the prompt defines the business objective, audience, decision criteria, constraints, priorities, and the final deliverable structure.\n\n[ASSUMPTION POLICY]\nMake at most three high-impact assumptions. State only the assumptions that materially change scope, output quality, or decision-making. Prefer common production defaults over speculative extras.\n\n[SOURCE POLICY]\nIf external evidence is not provided, frame claims as hypotheses or strategic recommendations rather than established facts. Distinguish market assumptions from confirmed constraints.\n\n[VERIFICATION STEPS]\nBefore finalizing, verify audience fit, decision logic, prioritization quality, and whether recommendations remain credible under the stated constraints.\n\n[ACCEPTANCE TESTS]\nA strong result lets a stakeholder answer yes to: is the audience clear, are decision criteria explicit, are recommendations prioritized, and can action begin without further reframing?\n\n[CONSTRAINTS]\nStart with the requested deliverable directly and avoid self-referential notes or methodology commentary. Avoid vague language, fabricated facts, and low-signal filler. Replace subjective wording with explicit criteria whenever possible. State assumptions only when they materially affect the result. If the task is technical, preserve exact terminology, APIs, and code identifiers. If the task is visual, include style, lighting, composition, and aspect ratio.\n\n[FAILURE MODES TO AVOID]\nAvoid generic business clichés, unprioritized recommendation lists, weak audience targeting, and missing decision criteria.\n\n[EXAMPLES]\nPrefer zero-shot instructions first. Add examples only if they materially improve format fidelity or remove ambiguity, and keep them tightly matched to the real task.\n\n[EXECUTION APPROACH]\nKeep the response logically ordered, make assumptions explicit only when needed, and verify the final result against the objective, constraints, and success criteria before responding.",
+      "structuralScore": {
+        "rolePresent": 100,
+        "objectivePresent": 100,
+        "outputFormatPresent": 100,
+        "decisionRulesPresent": 100,
+        "wordCount": 506,
+        "sectionCount": 19
+      },
+      "metadata": {
+        "rtlRequired": false,
+        "characterCount": 3905,
+        "arabicCharacterCount": 0
+      }
+    },
+    {
+      "id": "en_creative_coffee_launch",
+      "inputSeed": "write a founder launch story for a specialty coffee brand",
+      "taskType": "CREATIVE_WRITING",
+      "targetModel": "CHATGPT",
+      "language": "en",
+      "detectedLanguage": "en",
+      "promptType": "CREATIVE_WRITING",
+      "framework": "TRACE",
+      "generatedPrompt": "[SYSTEM MESSAGE]\nTreat the instruction set below as a direct execution brief. Complete the real objective, preserve all important constraints, and keep the output in final-answer form rather than process notes, shallow summarization, or visible reasoning.\n\n[USER MESSAGE]\n[ROLE]\nYou are an elite creative director and narrative prompt designer. Focus on marketing.\n\n[OBJECTIVE]\nProduce the strongest possible instruction set for the requested creative deliverable so a downstream AI can generate polished, audience-fit work without further clarification.\n\n[CONTEXT]\nThe user's real objective is: \"write a founder launch story for a specialty coffee brand\". Treat it as a direct execution request for an advanced AI system. Resolve missing detail conservatively, preserve domain accuracy, and make the instruction set immediately usable with strong control over quality, scope, and output shape.\n\n[TASK]\nProduce the requested creative deliverable. Clarify the audience, angle, structure, voice, emotional effect, and quality bar, then write with specificity, momentum, and strong narrative control.\n\n[DELIVERABLE]\nReturn the finished creative brief or writing prompt with the audience, angle, structure, and quality bar clearly defined.\n\n[OUTPUT FORMAT]\na structured response with clear sections and concise bullets\n\n[TONE & STYLE]\nUse a creative and vivid tone. Write like a senior marketing specialist delivering a result another professional can use immediately. Keep the wording polished, specific, and free of filler. Prefer concrete decisions and direct instructions over abstract advice.\n\n[DECISION RULES]\nPrefer audience fit over ornament. Prefer clear angle and structure over abstract cleverness. Prefer vivid, concrete details over generic adjectives.\n\n[RESPONSE BUDGET]\nKeep the response compact enough to finish in one pass. Use explicit headings and concise bullets where helpful. Spend detail on the parts that control execution quality, and compress setup or repeated explanation.\n\n[SUCCESS CRITERIA]\nThe result must be polished, audience-specific, coherent, and strong enough to produce a high-quality creative output on the first pass.\n\n[VALIDATION CHECKLIST]\nBefore returning, confirm the prompt defines the audience, angle, structure, voice, emotional effect, and quality bar clearly enough to guide a first-pass creative result.\n\n[ASSUMPTION POLICY]\nMake at most three high-impact assumptions. State only the assumptions that materially change scope, output quality, or decision-making. Prefer common production defaults over speculative extras.\n\n[CONSTRAINTS]\nStart with the requested deliverable directly and avoid self-referential notes or methodology commentary. Avoid vague language, fabricated facts, and low-signal filler. Replace subjective wording with explicit criteria whenever possible. State assumptions only when they materially affect the result. If the task is technical, preserve exact terminology, APIs, and code identifiers. If the task is visual, include style, lighting, composition, and aspect ratio.\n\n[FAILURE MODES TO AVOID]\nAvoid generic phrasing, weak voice, clichés, and deliverables that fail to define audience, structure, or creative angle.\n\n[EXAMPLES]\nPrefer zero-shot instructions first. Add examples only if they materially improve format fidelity or remove ambiguity, and keep them tightly matched to the real task.\n\n[EXECUTION APPROACH]\nKeep the response logically ordered, make assumptions explicit only when needed, and verify the final result against the objective, constraints, and success criteria before responding.",
+      "structuralScore": {
+        "rolePresent": 100,
+        "objectivePresent": 100,
+        "outputFormatPresent": 100,
+        "decisionRulesPresent": 100,
+        "wordCount": 493,
+        "sectionCount": 18
+      },
+      "metadata": {
+        "rtlRequired": false,
+        "characterCount": 3576,
+        "arabicCharacterCount": 0
+      }
+    },
+    {
+      "id": "ar_product_words_app",
+      "inputSeed": "تطبيق كلمات للأطفال",
+      "taskType": "CODE_GENERATION",
+      "targetModel": "GENERAL",
+      "language": "ar",
+      "detectedLanguage": "ar",
+      "promptType": "CODE_GENERATION",
+      "framework": "COAST",
+      "generatedPrompt": "[الدور]\nأنت مهندس منتجات وبرمجيات أول، ومصمم منتجات تعليمية، ومتخصص في تجربة الاستخدام الآمنة للأطفال، وتقدّم مواصفات منتج وتعليمات بناء جاهزة للتنفيذ.\n\n[الهدف]\nحوّل الموجز إلى مواصفة منتج وخطة بناء على مستوى الإنتاج لتطبيق مفردات آمن وجذاب للأطفال.\n\n[السياق]\nهدف المستخدم الحقيقي هو: \"تطبيق كلمات للأطفال\". تعامل معه كطلب منتج حقيقي يجب توسيعه إلى تعليمات تنفيذ مباشرة وجاهزة للاستخدام لفريق برمجي أو نظام بناء ذكاء اصطناعي متقدم. عالج التفاصيل الناقصة بحذر، وضع افتراضات عملية عند الحاجة، وأبقِ النتيجة محددة وقابلة للتنفيذ وفورية الاستخدام.\n\n[المهمة]\nصمّم تطبيقاً جاهزاً للإنتاج لتعليم الأطفال المفردات بناءً على هذا الموجز. حدّد الفئة العمرية المستهدفة، ومخرجات التعلّم، والمستخدمين الأساسيين، ودور الوالدين أو المعلمين عند الحاجة، وهيكل المحتوى اللغوي، وحلقات التعلّم السمعية والبصرية، والمكافآت، ومنطق المراجعة، وقواعد السلامة والخصوصية، ومتطلبات إمكانية الوصول، ومسارات الاستخدام، وخريطة الشاشات، والتقنية المقترحة، ومعمارية النظام، ونموذج البيانات، وأمثلة ممثلة للواجهات البرمجية وكائنات البيانات، وتوقعات العمل دون اتصال أو التدهور المقبول، ومتطلبات التوطين ودعم الاتجاه من اليمين إلى اليسار عند الحاجة، ونطاق النسخة الأولى، ومراحل التسليم، والتحسينات المستقبلية، ومقاييس النجاح. ضع افتراضات عملية وواضحة عندما تنقص التفاصيل، وواصل دون طرح أسئلة غير ضرورية.\n\n[المخرج المطلوب]\nأعد موجز تنفيذ منظم يمكن لفرق المنتج والتصميم والهندسة والمحتوى التعليمي استخدامه فوراً لتخطيط التطبيق وتصميمه وبنائه، مع تضمين واجهات برمجية ممثلة، وأمثلة هياكل بيانات، وملاحظات صريحة حول العمل دون اتصال والتوطين عند الحاجة.\n\n[صيغة الإخراج]\nاستجابة منظمة بهذه الأقسام: الهدف من المنتج، المستخدمون المستهدفون، الافتراضات، الميزات الأساسية، تجربة التعلّم، السلامة وإمكانية الوصول والخصوصية، هيكل الشاشات وتجربة الاستخدام، التقنية المقترحة، معمارية النظام، نموذج البيانات، تصميم الواجهات البرمجية، خطة تسليم النسخة الأولى، التحسينات المستقبلية، ومقاييس النجاح\n\n[النبرة والأسلوب]\nاستخدم نبرة احترافية وعملية ومناسبة للفئة المستهدفة. اكتب كما لو كنت قائد منتج وهندسة أول يسلّم موجزاً قابلاً للتنفيذ فوراً. فضّل القرارات العملية والمتطلبات المحددة على النصائح العامة، وحافظ على العربية الفصحى الحديثة في السياقات المهنية، مع إبقاء المصطلحات التقنية وأسماء المنتجات كما هي عند الحاجة.\n\n[قواعد اتخاذ القرار]\nقدّم وضوح النسخة الأولى على تضخم الميزات. قدّم سلامة الأطفال وخصوصيتهم وإمكانية الوصول على حيل التفاعل. قدّم حلقات تعلم قابلة للبناء على الميزات الافتراضية. قدّم الافتراضات الصريحة على الأسئلة المفتوحة. قدّم تغطية كاملة لكل الأقسام مع نقاط موجزة عالية الإشارة على الإطناب في الأقسام الأولى على حساب الأقسام اللاحقة.\n\n[ميزانية الاستجابة]\nأكمِل الموجز كاملاً في استجابة واحدة. اجعل التمهيد قصيراً جداً، ثم استخدم نقاطاً موجزة عالية الإشارة. استهدف من 3 إلى 5 نقاط في معظم الأقسام، وامنح أكبر قدر من التفصيل للأقسام: الميزات الأساسية، وتجربة التعلّم، ومعمارية النظام، ونموذج البيانات، وتصميم الواجهات البرمجية، وخطة تسليم النسخة الأولى. إذا شعرت بضيق ميزانية الاستجابة فاختصر الصياغة وادمج النقاط المتداخلة بدلاً من حذف أي قسم مطلوب.\n\n[معايير النجاح]\nيجب أن تكون النتيجة محددة بما يكفي لكي تتمكن فرق المنتج والتصميم والهندسة والمحتوى من البدء بالتنفيذ فوراً. ويجب أن تكون مناسبة للعمر، وقابلة للتنفيذ تقنياً، ومراعية للخصوصية، وواضحة في افتراضاتها ومفاضلاتها، وكاملة بحيث لا تُحذف أي فقرة مطلوبة، وخصوصاً تصميم الواجهات البرمجية، والتحسينات المستقبلية، وسلوك العمل دون اتصال، ومتطلبات التوطين، وأمثلة هياكل البيانات. حافظ على إيجاز الأقسام بما يسمح بإكمال الموجز كاملاً في استجابة واحدة.\n\n[قائمة التحقق]\nقبل الرد، تأكد من أن الموجز يحدد الفئة العمرية، ومخرجات التعلّم، وأدوار الطفل والبالغ، وبنية المحتوى، وحلقات التفاعل الآمنة، ومتطلبات الوصول، والشاشات الأساسية، والمعمارية، ونموذج البيانات، وأمثلة ممثلة للواجهات البرمجية وكائنات البيانات، وتوقعات العمل دون اتصال أو التدهور المقبول، ومتطلبات التوطين أو دعم الاتجاه من اليمين إلى اليسار عند الحاجة، ونطاق النسخة الأولى، والتحسينات المستقبلية، ومقاييس النجاح القابلة للقياس. وتأكد من ظهور كل قسم مذكور في صيغة المخرجات مرة واحدة مع محتوى حقيقي غير شكلي.\n\n[سياسة الافتراضات]\nضع ما لا يزيد على ثلاثة افتراضات عالية الأثر. اذكر فقط الافتراضات التي تغيّر ملاءمة العمر، أو السلامة، أو المعمارية، أو تصميم المحتوى، أو خطة الإطلاق. وقدّم افتراضات محافظة وآمنة للأطفال على ميزات تفاعل افتراضية.\n\n[خطوات التحقق]\nتحقق من أن كل ميزة رئيسية مرتبطة بدور طفل أو بالغ، وأن كل تدفّق حرج مرتبط بشاشة واضحة، وأن كل متطلب سلامة أو خصوصية مرتبط بضابط عملي، وأن كل ادعاء تعلّمي مرتبط بالمحتوى أو البيانات أو منطق التغذية الراجعة، وأن كل واجهة برمجية ممثلة مرتبطة بحاجة فعلية للمستخدم أو النظام، وأن كل شكل بيانات أساسي يدعم التدفقات المذكورة، وأن أي متطلب للعمل دون اتصال أو للتوطين مرتبط بسلوك الواجهة والتخزين والتشغيل.\n\n[معايير القبول]\nتُعد النتيجة قوية إذا استطاع فريق حقيقي الإجابة بنعم على الأسئلة التالية: هل يمكن تحديد نطاق النسخة الأولى، وتصميم رحلة الطفل الأساسية، وتحديد إشراف البالغ، ونمذجة البيانات، وتحديد واجهات برمجية ممثلة وحمولات نموذجية، ومراعاة سلوك العمل دون اتصال والتوطين عند الحاجة، والحفاظ على خارطة طريق مستقبلية واضحة، والبدء بالتنفيذ من دون ثغرات سلامة أو غموض جوهري؟\n\n[القيود]\nلا تتضمن أسماء الأطر الداخلية، أو ملاحظات المنهجية، أو شروحاً ميتا. استبدل العبارات الضبابية بمعايير أو حدود واضحة متى أمكن. إذا ظهرت تعليمات متداخلة فحوّلها إلى قاعدة قرار صريحة بدلاً من تركها متناقضة. اجعل النتيجة محددة وقابلة للتنفيذ وشفافة في افتراضاتها. إذا كان الجمهور أطفالاً فاحرص على سلامة التجربة، وملاءمتها العمريّة، وخصوصيتها، وإمكانية الوصول، ولا تضف عناصر اجتماعية أو سلوكية محفوفة بالمخاطر ما لم تُطلب صراحةً.\n\n[ما يجب تجنبه]\nتجنب نصائح تقنية التعليم العامة، وآليات التفاعل غير الآمنة للأطفال، وسرد الميزات بلا أولوية، وواجهات برمجية شكلية أو هياكل بيانات ضبابية، وإغفال فقرة التحسينات المستقبلية، وغياب تعريفات واضحة للعمل دون اتصال أو التوطين أو المعمارية أو البيانات أو مقاييس النجاح.\n\n[أمثلة]\nابدأ بتعليمات صفرية اللقطات ما لم تكن أمثلة قليلة مطلوبة فعلاً لضبط الصيغة أو إزالة الغموض. إذا أضفت مثالاً فليكن قريباً جداً من المهمة الحقيقية ولا يتعارض مع التعليمات.\n\n[منهج التنفيذ]\nنظّم الاستجابة بترتيب منطقي، واذكر الافتراضات عند الحاجة فقط، وتحقق من توافق النتيجة مع الهدف والقيود ومعايير النجاح قبل الإخراج.",
+      "structuralScore": {
+        "rolePresent": 100,
+        "objectivePresent": 100,
+        "outputFormatPresent": 100,
+        "decisionRulesPresent": 100,
+        "wordCount": 896,
+        "sectionCount": 18
+      },
+      "metadata": {
+        "rtlRequired": true,
+        "characterCount": 5947,
+        "arabicCharacterCount": 4952
+      }
+    },
+    {
+      "id": "ar_code_react_accessibility",
+      "inputSeed": "إتاحة React",
+      "taskType": "CODE_GENERATION",
+      "targetModel": "COPILOT",
+      "language": "ar",
+      "detectedLanguage": "ar",
+      "promptType": "CODE_GENERATION",
+      "framework": "COAST",
+      "generatedPrompt": "[CODE CONTEXT]\nافترض أنك تعمل داخل قاعدة كود إنتاجية، واذكر لغة البرمجة والبنية المطلوبة والاختبارات اللازمة.\n\n[الدور]\nأنت مهندس برمجيات رئيسي ومتخصص في توليد حلول برمجية دقيقة. ركّز على مجال التقنية.\n\n[الهدف]\nأنشئ مجموعة تعليمات تقنية دقيقة تدفع نموذجاً لاحقاً أو مهندساً إلى حل صحيح وجاهز للإنتاج ضمن مجال التقنية.\n\n[السياق]\nهدف المستخدم الحقيقي هو: \"إتاحة React\". تعامل معه كطلب تنفيذ مباشر موجّه إلى نظام ذكاء اصطناعي متقدم. استكمل التفاصيل الناقصة بحذر، وحافظ على دقة المجال، وصغ التعليمات بحيث تكون جاهزة للاستخدام فوراً مع تحكم واضح في الجودة والنطاق وشكل المخرج.\n\n[المهمة]\nقدّم استجابة تقنية جاهزة للتنفيذ. حدّد النطاق، وبيئة التشغيل المستهدفة، والمعمارية، والقيود، والحالات الطرفية، وخطوات التحقق، ومعايير القبول، ثم نفّذ بدقة إنتاجية ضمن مجال التقنية.\n\n[المخرج المطلوب]\nأعد موجزاً أو برومبتاً تقنياً جاهزاً للتنفيذ يحدد النطاق وبيئة التشغيل المستهدفة والمعمارية والحالات الطرفية وخطوات التحقق ومعايير القبول بوضوح.\n\n[صيغة الإخراج]\nحل منظم يتضمن كوداً مشروحاً وخطوات تنفيذ واختبارات\n\n[النبرة والأسلوب]\nاستخدم نبرة تقنية ودقيقة. اكتب كما لو كنت خبيراً أول في مجال التقنية يسلّم نتيجة يمكن استخدامها فوراً. التزم بالعربية الفصحى الحديثة في السياقات المهنية، وحافظ على الصياغة السليمة، والقواعد العربية، وعلامات الترقيم المناسبة، وتجنب العربيزي والترجمة الحرفية، وأبقِ المصطلحات التقنية وأسماء المنتجات كما هي عند الحاجة.\n\n[قواعد اتخاذ القرار]\nقدّم الصحة وقابلية الصيانة والتحقق على الاختصارات الذكية. قدّم الواجهات الصريحة والحالات الطرفية على الافتراضات الضمنية. قدّم الافتراضات الآمنة للإنتاج على التحسينات التخيلية.\n\n[ميزانية الاستجابة]\nأبقِ الاستجابة موجزة بما يكفي لتكتمل في تمريرة واحدة. استخدم عناوين صريحة ونقاطاً مختصرة عند الحاجة. وجّه التفصيل إلى الأجزاء التي تضبط جودة التنفيذ، واضغط التمهيد أو الشرح المكرر. قدّم النطاق، وبيئة التشغيل، والقيود، وخطوات التحقق، ومعايير القبول على الشرح الخلفي. واجعل تعليمات سياق الكود مضغوطة بشكل خاص حتى تبقى تفاصيل التنفيذ في الواجهة.\n\n[معايير النجاح]\nيجب أن تكون النتيجة صحيحة تقنياً، ومحددة النطاق، وجاهزة للإنتاج، ومفصلة بما يكفي لبدء التنفيذ دون حاجة إلى توضيحات جوهرية.\n\n[قائمة التحقق]\nقبل الرد، تأكد من أن البرومبت يحدد النطاق، وبيئة التشغيل المستهدفة، والمعمارية، والقيود، والحالات الطرفية، وخطوات التحقق، وشكل المخرج المتوقع بدقة.\n\n[سياسة الافتراضات]\nضع ما لا يزيد على ثلاثة افتراضات عالية الأثر. اذكر فقط الافتراضات التي تغيّر البيئة أو المعمارية أو التبعيات أو الأمان أو سلوك التشغيل بشكل جوهري. وقدّم افتراضات آمنة للإنتاج على اختصارات الراحة.\n\n[خطوات التحقق]\nقبل الإنهاء، تحقق من الصحة التقنية، وواقعية التبعيات، وافتراضات التشغيل، والحالات الطرفية، ومخاوف الأمان أو الوصول عند الصلة، وإمكانية تنفيذ المخرج المطلوب واختباره مباشرةً.\n\n[معايير القبول]\nتُعد النتيجة قوية إذا استطاع مهندس كفء الإجابة بنعم على الأسئلة التالية: هل النطاق صريح؟ وهل قيود التنفيذ واضحة؟ وهل خطوات التحقق عملية؟ وهل يمكن بدء العمل من دون توضيحات تقنية كبيرة؟\n\n[القيود]\nابدأ بالمخرج المطلوب مباشرةً من دون ملاحظات ذاتية أو شروح منهجية. تجنّب العموميات، والحقائق المختلقة، والحشو منخفض القيمة. استبدل الأوصاف الفضفاضة بمعايير أو حدود قابلة للفهم كلما أمكن. اذكر الافتراضات فقط عندما تؤثر مادياً في النتيجة. إذا كان الطلب تقنياً فحافظ على أسماء الدوال والواجهات البرمجية والمصطلحات القياسية دون تشويه. وإذا كان الطلب بصرياً فضمّن الأسلوب والإضاءة والتكوين والنسبة.\n\n[ما يجب تجنبه]\nتجنب الشفرة شبهية التنفيذ بلا تفاصيل، والواجهات البرمجية المختلقة، وتجاوز الحالات الطرفية، وافتراضات التشغيل غير المعلنة، وغياب خطوات التحقق.\n\n[أمثلة]\nابدأ بتعليمات صفرية اللقطات ما لم تكن أمثلة قليلة مطلوبة فعلاً لضبط الصيغة أو إزالة الغموض. إذا أضفت مثالاً فليكن قريباً جداً من المهمة الحقيقية ولا يتعارض مع التعليمات.\n\n[منهج التنفيذ]\nنظّم الاستجابة بترتيب منطقي، واذكر الافتراضات عند الحاجة فقط، وتحقق من توافق النتيجة مع الهدف والقيود ومعايير النجاح قبل الإخراج.",
+      "structuralScore": {
+        "rolePresent": 100,
+        "objectivePresent": 100,
+        "outputFormatPresent": 100,
+        "decisionRulesPresent": 100,
+        "wordCount": 554,
+        "sectionCount": 19
+      },
+      "metadata": {
+        "rtlRequired": true,
+        "characterCount": 3686,
+        "arabicCharacterCount": 3020
+      }
+    },
+    {
+      "id": "ar_research_b2b_pricing",
+      "inputSeed": "ابحث أفضل نموذج تسعير لمنتج تحليلات SaaS موجه للشركات",
+      "taskType": "RESEARCH",
+      "targetModel": "GENERAL",
+      "language": "ar",
+      "detectedLanguage": "ar",
+      "promptType": "RESEARCH",
+      "framework": "CHAIN_OF_THOUGHT",
+      "generatedPrompt": "[الدور]\nأنت باحث استراتيجي ينظم التحقيقات المعتمدة على الأدلة. ركّز على مجال المالية.\n\n[الهدف]\nأنشئ موجز بحث يدفع إلى تحقيق قائم على الأدلة واستنتاجات قابلة للدفاع عنها.\n\n[السياق]\nهدف المستخدم الحقيقي هو: \"ابحث أفضل نموذج تسعير لمنتج تحليلات SaaS موجه للشركات\". تعامل معه كطلب تنفيذ مباشر موجّه إلى نظام ذكاء اصطناعي متقدم. استكمل التفاصيل الناقصة بحذر، وحافظ على دقة المجال، وصغ التعليمات بحيث تكون جاهزة للاستخدام فوراً مع تحكم واضح في الجودة والنطاق وشكل المخرج.\n\n[المهمة]\nابحث الموضوع بشكل منهجي. حدّد هدف البحث، والنطاق، ومعيار الأدلة، ومعايير التقييم، وقواعد عدم اليقين، وهيكل المخرجات، ثم قدّم نتيجة قائمة على الأدلة مع استدلال واضح وافتراضات صريحة.\n\n[المخرج المطلوب]\nأعد موجز بحث يحدد النطاق وتوقعات المصادر أو الأدلة وقواعد عدم اليقين ومعايير التقييم والبنية النهائية المطلوبة.\n\n[صيغة الإخراج]\nاستجابة منظمة بعناوين فرعية ونقاط واضحة\n\n[النبرة والأسلوب]\nاستخدم نبرة واضحة ومتوازنة. اكتب كما لو كنت خبيراً أول في مجال المالية يسلّم نتيجة يمكن استخدامها فوراً. التزم بالعربية الفصحى الحديثة في السياقات المهنية، وحافظ على الصياغة السليمة، والقواعد العربية، وعلامات الترقيم المناسبة، وتجنب العربيزي والترجمة الحرفية، وأبقِ المصطلحات التقنية وأسماء المنتجات كما هي عند الحاجة.\n\n[قواعد اتخاذ القرار]\nقدّم الأدلة على الادعاء. قدّم معايير تقييم صريحة على التبرير اللاحق. قدّم وسم عدم اليقين عندما لا يمكن الجزم بثقة.\n\n[ميزانية الاستجابة]\nأبقِ الاستجابة موجزة بما يكفي لتكتمل في تمريرة واحدة. استخدم عناوين صريحة ونقاطاً مختصرة عند الحاجة. وجّه التفصيل إلى الأجزاء التي تضبط جودة التنفيذ، واضغط التمهيد أو الشرح المكرر. قدّم هدف البحث، ومعيار الأدلة، ومعايير التقييم، وشكل التوصية، ومعالجة عدم اليقين على الخلفية العامة المطولة.\n\n[معايير النجاح]\nيجب أن تكون النتيجة معتمدة على الأدلة، وواضحة في افتراضاتها، ومنظمة بحيث يمكن الدفاع عن استنتاجاتها والعمل بها.\n\n[قائمة التحقق]\nقبل الرد، تأكد من أن البرومبت يحدد هدف البحث، والنطاق، ومعيار الأدلة، ومعايير التقييم، وقواعد عدم اليقين، والبنية النهائية للتقرير.\n\n[سياسة الافتراضات]\nضع ما لا يزيد على ثلاثة افتراضات عالية الأثر. اذكر فقط الافتراضات التي تغيّر قاعدة الأدلة أو النطاق أو التفسير بشكل جوهري. واسم عدم اليقين صراحةً بدلاً من تقديمه كحقيقة.\n\n[سياسة المصادر]\nاستخدم أقوى معيار أدلة متاح. افصل بوضوح بين الحقائق المرصودة والافتراضات والتوصيات. واسم عدم اليقين صراحةً كلما تعذّر دعم الادعاء بثقة.\n\n[خطوات التحقق]\nقبل الإنهاء، تحقق من قابلية تتبع الأدلة، ووسم عدم اليقين، وشمول معايير التقييم، وأن التوصيات ناتجة فعلاً عن الأدلة والنطاق المذكورين.\n\n[معايير القبول]\nتُعد النتيجة قوية إذا استطاع باحث الإجابة بنعم على الأسئلة التالية: هل معيار الأدلة واضح؟ وهل قواعد عدم اليقين صريحة؟ وهل يمكن إنتاج التقرير النهائي من دون اختراع معايير لاحقاً؟\n\n[القيود]\nابدأ بالمخرج المطلوب مباشرةً من دون ملاحظات ذاتية أو شروح منهجية. تجنّب العموميات، والحقائق المختلقة، والحشو منخفض القيمة. استبدل الأوصاف الفضفاضة بمعايير أو حدود قابلة للفهم كلما أمكن. اذكر الافتراضات فقط عندما تؤثر مادياً في النتيجة. إذا كان الطلب تقنياً فحافظ على أسماء الدوال والواجهات البرمجية والمصطلحات القياسية دون تشويه. وإذا كان الطلب بصرياً فضمّن الأسلوب والإضاءة والتكوين والنسبة.\n\n[ما يجب تجنبه]\nتجنب الادعاءات غير المسندة، والتركيب السطحي، ومعايير التقييم غير الواضحة، والتوصيات غير القابلة للتتبع إلى الأدلة.\n\n[أمثلة]\nابدأ بتعليمات صفرية اللقطات ما لم تكن أمثلة قليلة مطلوبة فعلاً لضبط الصيغة أو إزالة الغموض. إذا أضفت مثالاً فليكن قريباً جداً من المهمة الحقيقية ولا يتعارض مع التعليمات.\n\n[منهج التنفيذ]\nنفّذ الاستدلال داخلياً، وراجِع النتيجة مقابل الهدف والقيود ومعايير النجاح قبل الرد، ثم اعرض النتيجة النهائية المصقولة فقط ما لم يُطلب شرح الاستدلال صراحةً.",
+      "structuralScore": {
+        "rolePresent": 100,
+        "objectivePresent": 100,
+        "outputFormatPresent": 100,
+        "decisionRulesPresent": 100,
+        "wordCount": 537,
+        "sectionCount": 19
+      },
+      "metadata": {
+        "rtlRequired": true,
+        "characterCount": 3478,
+        "arabicCharacterCount": 2840
+      }
+    },
+    {
+      "id": "ar_image_robotics_poster",
+      "inputSeed": "بوستر روبوتات",
+      "taskType": "IMAGE_GENERATION",
+      "targetModel": "MIDJOURNEY",
+      "language": "ar",
+      "detectedLanguage": "ar",
+      "promptType": "IMAGE_GENERATION",
+      "framework": "TRACE",
+      "generatedPrompt": "[البرومبت البصري]\nأنشئ برومبت بصرياً عالي الجودة. حدّد الموضوع، والمشهد، والأسلوب، والإضاءة، والتكوين، وزاوية التأطير، ونسبة الأبعاد، والعناصر المستبعدة عند الحاجة.\n\n[الأسلوب]\nسينمائي، غني بالتفاصيل، عميق بصرياً، مع جودة احترافية.\n\n[الإضاءة]\nإضاءة درامية متوازنة مع إبراز العنصر الأساسي بوضوح.\n\n[التكوين]\nاستخدم تكويناً واضحاً يحدّد العنصر المحوري والعمق والخلفية، وصغ الوصف ليتوافق مع MIDJOURNEY.\n\n[نسبة الأبعاد]\n--ar 16:9\n\n[العناصر المستبعدة]\nتجنّب التشويش، والأطراف المقطوعة، والتشريح غير الصحيح، والنصوص العشوائية، والملمس منخفض الجودة.\n\n[النبرة والأسلوب]\nاستخدم نبرة واضحة ومتوازنة. اكتب كما لو كنت خبيراً أول في مجال التصميم المرئي يسلّم نتيجة يمكن استخدامها فوراً. التزم بالعربية الفصحى الحديثة في السياقات المهنية، وحافظ على الصياغة السليمة، والقواعد العربية، وعلامات الترقيم المناسبة، وتجنب العربيزي والترجمة الحرفية، وأبقِ المصطلحات التقنية وأسماء المنتجات كما هي عند الحاجة.\n\n[القيود]\nابدأ بالمخرج المطلوب مباشرةً من دون ملاحظات ذاتية أو شروح منهجية. تجنّب العموميات، والحقائق المختلقة، والحشو منخفض القيمة. استبدل الأوصاف الفضفاضة بمعايير أو حدود قابلة للفهم كلما أمكن. اذكر الافتراضات فقط عندما تؤثر مادياً في النتيجة. إذا كان الطلب تقنياً فحافظ على أسماء الدوال والواجهات البرمجية والمصطلحات القياسية دون تشويه. وإذا كان الطلب بصرياً فضمّن الأسلوب والإضاءة والتكوين والنسبة.",
+      "structuralScore": {
+        "rolePresent": 0,
+        "objectivePresent": 0,
+        "outputFormatPresent": 0,
+        "decisionRulesPresent": 0,
+        "wordCount": 181,
+        "sectionCount": 8
+      },
+      "metadata": {
+        "rtlRequired": true,
+        "characterCount": 1288,
+        "arabicCharacterCount": 1052
+      }
+    },
+    {
+      "id": "ar_business_saas_pricing",
+      "inputSeed": "تسعير SaaS",
+      "taskType": "BUSINESS",
+      "targetModel": "GENERAL",
+      "language": "ar",
+      "detectedLanguage": "ar",
+      "promptType": "BUSINESS",
+      "framework": "CARE",
+      "generatedPrompt": "[الدور]\nأنت استراتيجي أعمال أول ومتخصص في الرسائل المقنعة. ركّز على مجال المالية.\n\n[الهدف]\nأنشئ مجموعة تعليمات تجارية جاهزة للتنفيذ ومحسّنة لجودة القرار والوضوح والإقناع.\n\n[السياق]\nهدف المستخدم الحقيقي هو: \"تسعير SaaS\". تعامل معه كطلب تنفيذ مباشر موجّه إلى نظام ذكاء اصطناعي متقدم. استكمل التفاصيل الناقصة بحذر، وحافظ على دقة المجال، وصغ التعليمات بحيث تكون جاهزة للاستخدام فوراً مع تحكم واضح في الجودة والنطاق وشكل المخرج.\n\n[المهمة]\nطوّر المخرج التجاري المطلوب. حدّد الهدف، والجمهور، ومعايير القرار، والقيود، والنتيجة المرغوبة، ثم قدّم نتيجة موجزة ومقنعة وجاهزة للتنفيذ.\n\n[المخرج المطلوب]\nأعد موجزاً تجارياً جاهزاً يحدد الجمهور ومعايير القرار والقيود وبنية المخرج المطلوبة بدقة.\n\n[صيغة الإخراج]\nمخرجات منظمة بعناوين واضحة وخطوات عملية\n\n[النبرة والأسلوب]\nاستخدم نبرة احترافية ومقنعة. اكتب كما لو كنت خبيراً أول في مجال المالية يسلّم نتيجة يمكن استخدامها فوراً. التزم بالعربية الفصحى الحديثة في السياقات المهنية، وحافظ على الصياغة السليمة، والقواعد العربية، وعلامات الترقيم المناسبة، وتجنب العربيزي والترجمة الحرفية، وأبقِ المصطلحات التقنية وأسماء المنتجات كما هي عند الحاجة.\n\n[قواعد اتخاذ القرار]\nقدّم جودة القرار على الإقناع العام. قدّم قيود العمل وسياق الجمهور على الشعارات. قدّم توصيات مرتبة بالأولوية على سكب الأفكار دون تنظيم.\n\n[ميزانية الاستجابة]\nأبقِ الاستجابة موجزة بما يكفي لتكتمل في تمريرة واحدة. استخدم عناوين صريحة ونقاطاً مختصرة عند الحاجة. وجّه التفصيل إلى الأجزاء التي تضبط جودة التنفيذ، واضغط التمهيد أو الشرح المكرر. قدّم الجمهور، ومعايير القرار، والتوصيات، وبنية المخرج العملية على التعليق التمهيدي عن السوق.\n\n[معايير النجاح]\nيجب أن تكون النتيجة ذات مصداقية تجارية، ومفيدة للقرار، ومحددة بما يكفي ليتصرف عليها صاحب مصلحة مهني فوراً.\n\n[قائمة التحقق]\nقبل الرد، تأكد من أن البرومبت يحدد الهدف التجاري، والجمهور، ومعايير القرار، والقيود، والأولويات، وبنية المخرج النهائي.\n\n[سياسة الافتراضات]\nضع ما لا يزيد على ثلاثة افتراضات عالية الأثر. اذكر فقط الافتراضات التي تغيّر النطاق أو جودة المخرج أو القرار بشكل جوهري. وقدّم افتراضات إنتاجية شائعة على الإضافات التخيلية.\n\n[سياسة المصادر]\nإذا لم تُقدَّم أدلة خارجية، فصغ الادعاءات كفرضيات أو توصيات استراتيجية لا كحقائق ثابتة. وافصل بين افتراضات السوق والقيود المؤكدة.\n\n[خطوات التحقق]\nقبل الإنهاء، تحقق من ملاءمة الجمهور، ومنطق القرار، وجودة ترتيب الأولويات، وأن التوصيات تبقى ذات مصداقية ضمن القيود المذكورة.\n\n[معايير القبول]\nتُعد النتيجة قوية إذا استطاع صاحب مصلحة الإجابة بنعم على الأسئلة التالية: هل الجمهور واضح؟ وهل معايير القرار صريحة؟ وهل التوصيات مرتبة بالأولوية؟ وهل يمكن البدء بالعمل من دون إعادة صياغة إضافية؟\n\n[القيود]\nابدأ بالمخرج المطلوب مباشرةً من دون ملاحظات ذاتية أو شروح منهجية. تجنّب العموميات، والحقائق المختلقة، والحشو منخفض القيمة. استبدل الأوصاف الفضفاضة بمعايير أو حدود قابلة للفهم كلما أمكن. اذكر الافتراضات فقط عندما تؤثر مادياً في النتيجة. إذا كان الطلب تقنياً فحافظ على أسماء الدوال والواجهات البرمجية والمصطلحات القياسية دون تشويه. وإذا كان الطلب بصرياً فضمّن الأسلوب والإضاءة والتكوين والنسبة.\n\n[ما يجب تجنبه]\nتجنب الكليشيهات التجارية العامة، وقوائم التوصيات غير المرتبة، وضعف استهداف الجمهور، وغياب معايير القرار.\n\n[أمثلة]\nابدأ بتعليمات صفرية اللقطات ما لم تكن أمثلة قليلة مطلوبة فعلاً لضبط الصيغة أو إزالة الغموض. إذا أضفت مثالاً فليكن قريباً جداً من المهمة الحقيقية ولا يتعارض مع التعليمات.\n\n[منهج التنفيذ]\nنظّم الاستجابة بترتيب منطقي، واذكر الافتراضات عند الحاجة فقط، وتحقق من توافق النتيجة مع الهدف والقيود ومعايير النجاح قبل الإخراج.",
+      "structuralScore": {
+        "rolePresent": 100,
+        "objectivePresent": 100,
+        "outputFormatPresent": 100,
+        "decisionRulesPresent": 100,
+        "wordCount": 503,
+        "sectionCount": 19
+      },
+      "metadata": {
+        "rtlRequired": true,
+        "characterCount": 3327,
+        "arabicCharacterCount": 2724
+      }
+    },
+    {
+      "id": "ar_creative_coffee_launch",
+      "inputSeed": "اكتب قصة إطلاق لعلامة قهوة تستهدف مؤسسي الشركات الناشئة",
+      "taskType": "CREATIVE_WRITING",
+      "targetModel": "CHATGPT",
+      "language": "ar",
+      "detectedLanguage": "ar",
+      "promptType": "CREATIVE_WRITING",
+      "framework": "TRACE",
+      "generatedPrompt": "[SYSTEM MESSAGE]\nاعتبر مجموعة التعليمات التالية موجز تنفيذ مباشر. نفّذ الهدف الحقيقي، واحتفظ بكل القيود المهمة، وابقِ المخرج في صورة نتيجة نهائية واضحة بدلاً من تحليل العملية أو تلخيصها.\n\n[USER MESSAGE]\n[الدور]\nأنت مدير إبداعي خبير ومهندس برومبتات سردية متقدم. ركّز على مجال التسويق.\n\n[الهدف]\nأنشئ مجموعة تعليمات قوية للمخرج الإبداعي المطلوب بحيث يتمكن نموذج لاحق من إنتاج عمل مصقول وملائم للجمهور دون حاجة إلى استيضاحات إضافية.\n\n[السياق]\nهدف المستخدم الحقيقي هو: \"اكتب قصة إطلاق لعلامة قهوة تستهدف مؤسسي الشركات الناشئة\". تعامل معه كطلب تنفيذ مباشر موجّه إلى نظام ذكاء اصطناعي متقدم. استكمل التفاصيل الناقصة بحذر، وحافظ على دقة المجال، وصغ التعليمات بحيث تكون جاهزة للاستخدام فوراً مع تحكم واضح في الجودة والنطاق وشكل المخرج.\n\n[المهمة]\nأنشئ المخرج الإبداعي المطلوب مباشرةً. حدّد الجمهور، والزّاوية، والبنية، والصوت الأسلوبي، والأثر العاطفي، ومعيار الجودة، ثم اكتب بدقة وحيوية وتحكم سردي واضح.\n\n[المخرج المطلوب]\nأعد الموجز الإبداعي النهائي أو برومبت الكتابة النهائي مع تحديد الجمهور والزّاوية والبنية ومعيار الجودة بوضوح.\n\n[صيغة الإخراج]\nاستجابة منظمة بعناوين فرعية ونقاط واضحة\n\n[النبرة والأسلوب]\nاستخدم نبرة إبداعية وحيوية. اكتب كما لو كنت خبيراً أول في مجال التسويق يسلّم نتيجة يمكن استخدامها فوراً. التزم بالعربية الفصحى الحديثة في السياقات المهنية، وحافظ على الصياغة السليمة، والقواعد العربية، وعلامات الترقيم المناسبة، وتجنب العربيزي والترجمة الحرفية، وأبقِ المصطلحات التقنية وأسماء المنتجات كما هي عند الحاجة.\n\n[قواعد اتخاذ القرار]\nقدّم ملاءمة الجمهور على الزخرفة. قدّم الزاوية الواضحة والبنية المحكمة على الغموض الذكي. قدّم التفاصيل الحسية الملموسة على الصفات العامة.\n\n[ميزانية الاستجابة]\nأبقِ الاستجابة موجزة بما يكفي لتكتمل في تمريرة واحدة. استخدم عناوين صريحة ونقاطاً مختصرة عند الحاجة. وجّه التفصيل إلى الأجزاء التي تضبط جودة التنفيذ، واضغط التمهيد أو الشرح المكرر.\n\n[معايير النجاح]\nيجب أن تكون النتيجة مصقولة، وملائمة للجمهور، ومتماسكة، وقوية بما يكفي لإنتاج مخرج إبداعي عالي الجودة من المحاولة الأولى.\n\n[قائمة التحقق]\nقبل الرد، تأكد من أن البرومبت يحدد الجمهور، والزّاوية، والبنية، والصوت الأسلوبي، والأثر العاطفي، ومعيار الجودة بوضوح يكفي لإنتاج مخرج إبداعي قوي من المحاولة الأولى.\n\n[سياسة الافتراضات]\nضع ما لا يزيد على ثلاثة افتراضات عالية الأثر. اذكر فقط الافتراضات التي تغيّر النطاق أو جودة المخرج أو القرار بشكل جوهري. وقدّم افتراضات إنتاجية شائعة على الإضافات التخيلية.\n\n[القيود]\nابدأ بالمخرج المطلوب مباشرةً من دون ملاحظات ذاتية أو شروح منهجية. تجنّب العموميات، والحقائق المختلقة، والحشو منخفض القيمة. استبدل الأوصاف الفضفاضة بمعايير أو حدود قابلة للفهم كلما أمكن. اذكر الافتراضات فقط عندما تؤثر مادياً في النتيجة. إذا كان الطلب تقنياً فحافظ على أسماء الدوال والواجهات البرمجية والمصطلحات القياسية دون تشويه. وإذا كان الطلب بصرياً فضمّن الأسلوب والإضاءة والتكوين والنسبة.\n\n[ما يجب تجنبه]\nتجنب الصياغة العامة، والصوت الأسلوبي الضعيف، والكليشيهات، والمخرجات التي لا تحدد الجمهور أو البنية أو الزاوية الإبداعية.\n\n[أمثلة]\nابدأ بتعليمات صفرية اللقطات ما لم تكن أمثلة قليلة مطلوبة فعلاً لضبط الصيغة أو إزالة الغموض. إذا أضفت مثالاً فليكن قريباً جداً من المهمة الحقيقية ولا يتعارض مع التعليمات.\n\n[منهج التنفيذ]\nنظّم الاستجابة بترتيب منطقي، واذكر الافتراضات عند الحاجة فقط، وتحقق من توافق النتيجة مع الهدف والقيود ومعايير النجاح قبل الإخراج.",
+      "structuralScore": {
+        "rolePresent": 100,
+        "objectivePresent": 100,
+        "outputFormatPresent": 100,
+        "decisionRulesPresent": 100,
+        "wordCount": 478,
+        "sectionCount": 18
+      },
+      "metadata": {
+        "rtlRequired": true,
+        "characterCount": 3153,
+        "arabicCharacterCount": 2562
+      }
+    }
+  ]
+}

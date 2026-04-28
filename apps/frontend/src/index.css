@@ -1,0 +1,224 @@
+@import url("https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-heading: "Instrument Serif", serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+  --bg: #f5f3ee;
+  --bg-elevated: rgba(255, 255, 255, 0.88);
+  --bg-muted: rgba(232, 228, 219, 0.85);
+  --text-primary: #111113;
+  --text-secondary: #4a4a53;
+  --border: rgba(17, 17, 19, 0.1);
+  --panel-shadow: 0 24px 90px rgba(14, 14, 20, 0.12);
+  --glass-highlight: linear-gradient(180deg, rgba(255, 255, 255, 0.32), transparent 42%);
+  --shell-ripple: radial-gradient(circle at 20% 20%, rgba(255,255,255,0.45), transparent 0 2px, transparent 2px);
+}
+
+[data-theme="dark"] {
+  --bg: #070b12;
+  --bg-elevated: rgba(13, 18, 31, 0.64);
+  --bg-muted: rgba(10, 15, 27, 0.78);
+  --text-primary: #f5f3ee;
+  --text-secondary: #96a3b8;
+  --border: rgba(183, 208, 255, 0.12);
+  --panel-shadow: 0 30px 120px rgba(0, 0, 0, 0.45);
+  --glass-highlight: linear-gradient(180deg, rgba(169, 204, 255, 0.16), transparent 48%);
+  --shell-ripple: radial-gradient(circle at 20% 20%, rgba(125,171,255,0.24), transparent 0 2px, transparent 2px);
+}
+
+html[lang="ar"] {
+  --font-body: "Noto Naskh Arabic", serif;
+}
+
+html {
+  background: var(--bg);
+  color: var(--text-primary);
+  scroll-behavior: smooth;
+  transition: background-color 220ms ease, color 220ms ease;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-body);
+  background:
+    radial-gradient(circle at 12% 14%, rgba(99, 102, 241, 0.24), transparent 0 22%),
+    radial-gradient(circle at 83% 16%, rgba(66, 153, 225, 0.16), transparent 0 20%),
+    radial-gradient(circle at 74% 78%, rgba(72, 187, 255, 0.12), transparent 0 18%),
+    linear-gradient(180deg, rgba(12, 18, 32, 0.28), transparent 24%),
+    var(--bg);
+  color: var(--text-primary);
+  background-attachment: fixed;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+*::selection {
+  background: rgba(99, 102, 241, 0.3);
+}
+
+.glass {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(24px) saturate(150%);
+  box-shadow: var(--panel-shadow);
+  position: relative;
+}
+
+.section-sheen {
+  position: relative;
+  overflow: hidden;
+}
+
+.section-sheen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    var(--glass-highlight),
+    linear-gradient(135deg, rgba(99, 102, 241, 0.18), transparent 34%, rgba(91, 196, 255, 0.08) 72%, transparent 100%);
+  pointer-events: none;
+}
+
+.section-sheen::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 15% 18%, rgba(255,255,255,0.08), transparent 0 24%),
+    radial-gradient(circle at 90% 12%, rgba(99,102,241,0.12), transparent 0 20%);
+  pointer-events: none;
+}
+
+.app-shell {
+  position: relative;
+  isolation: isolate;
+}
+
+.app-shell::before {
+  content: "";
+  position: fixed;
+  inset: -20%;
+  background:
+    radial-gradient(circle at 18% 26%, rgba(70, 132, 255, 0.14), transparent 0 18%),
+    radial-gradient(circle at 84% 22%, rgba(117, 231, 255, 0.09), transparent 0 16%),
+    radial-gradient(circle at 50% 80%, rgba(99, 102, 241, 0.11), transparent 0 18%);
+  filter: blur(28px);
+  z-index: -2;
+  pointer-events: none;
+}
+
+.app-shell::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.012) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.012) 1px, transparent 1px);
+  background-size: 40px 40px;
+  mask-image: radial-gradient(circle at center, black 42%, transparent 92%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.water-panel {
+  position: relative;
+  overflow: hidden;
+}
+
+.water-panel::before {
+  content: "";
+  position: absolute;
+  inset: auto -20% -60% -10%;
+  height: 75%;
+  background:
+    radial-gradient(circle at 22% 48%, rgba(121, 198, 255, 0.16), transparent 0 32%),
+    radial-gradient(circle at 62% 44%, rgba(99, 102, 241, 0.18), transparent 0 36%),
+    radial-gradient(circle at 80% 58%, rgba(255,255,255,0.08), transparent 0 24%);
+  filter: blur(30px);
+  pointer-events: none;
+}
+
+.liquid-orb {
+  position: absolute;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 28% 25%, rgba(255,255,255,0.28), transparent 0 26%),
+    linear-gradient(135deg, rgba(99,102,241,0.24), rgba(65,155,255,0.1));
+  border: 1px solid rgba(183, 208, 255, 0.12);
+  filter: blur(0.2px);
+  box-shadow: 0 24px 120px rgba(34, 83, 164, 0.18);
+  pointer-events: none;
+}
+
+.liquid-orb.one {
+  top: 120px;
+  right: 4%;
+  width: 220px;
+  height: 220px;
+}
+
+.liquid-orb.two {
+  top: 520px;
+  left: 3%;
+  width: 180px;
+  height: 180px;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid rgba(183, 208, 255, 0.14);
+  background: rgba(93, 138, 255, 0.08);
+  padding: 0.45rem 0.8rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #c4dbff;
+}
+
+.eyebrow::before {
+  content: "";
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #77d1ff, #6366f1);
+  box-shadow: 0 0 18px rgba(119, 209, 255, 0.8);
+}
+
+.prompt-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+@media (min-width: 1024px) {
+  .prompt-grid {
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  }
+}
+
+.rtl-flip {
+  transition: direction 220ms ease, transform 220ms ease;
+}
+
+.hero-title {
+  text-wrap: balance;
+}
+
+.shell-rule {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(183, 208, 255, 0.18), transparent);
+}

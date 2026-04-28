@@ -1,0 +1,15 @@
+node_modules
+dist
+.DS_Store
+.env
+.env.local
+.env.test
+coverage
+.turbo
+apps/backend/generated
+apps/backend/prisma
+apps/frontend/.vite
+apps/frontend/playwright-report
+apps/frontend/test-results
+*.log
+

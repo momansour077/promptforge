@@ -1,0 +1,166 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - "**"
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_DB: promptforge
+          POSTGRES_USER: promptforge
+          POSTGRES_PASSWORD: promptforge
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U promptforge -d promptforge"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      DATABASE_URL: postgresql://promptforge:promptforge@localhost:5432/promptforge?schema=public
+      REDIS_URL: redis://localhost:6379
+      NODE_ENV: test
+      PORT: 4000
+      JWT_SECRET: test-jwt-secret-test-jwt-secret-123456
+      JWT_REFRESH_SECRET: test-refresh-secret-test-refresh-secret-123456
+      JWT_EXPIRES_IN: 15m
+      JWT_REFRESH_EXPIRES_IN: 7d
+      MISTRAL_API_KEY: test-mistral-api-key
+      MISTRAL_BASE_URL: https://api.mistral.ai/v1
+      MISTRAL_MODEL: mistral-large-latest
+      RATE_LIMIT_FREE_DAILY: 20
+      RATE_LIMIT_PRO_DAILY: 500
+      FRONTEND_URL: http://localhost:4173
+      CORS_ORIGINS: http://localhost:4173
+      COOKIE_DOMAIN: localhost
+      ACCESS_COOKIE_NAME: promptforge_access
+      REFRESH_COOKIE_NAME: promptforge_refresh
+      CSRF_COOKIE_NAME: promptforge_csrf
+      LOG_LEVEL: error
+      PUBLIC_RATE_LIMIT_WINDOW_MS: 900000
+      PUBLIC_RATE_LIMIT_MAX: 100
+      API_BASE_PATH: /api
+      VITE_API_BASE_URL: http://localhost:4000/api
+      PLAYWRIGHT_BASE_URL: http://localhost:4173
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: |
+            apps/backend/package-lock.json
+            apps/frontend/package-lock.json
+
+      - name: Install backend dependencies
+        working-directory: apps/backend
+        run: npm ci
+
+      - name: Install frontend dependencies
+        working-directory: apps/frontend
+        run: npm ci
+
+      - name: Install Playwright browsers
+        working-directory: apps/frontend
+        run: npx playwright install --with-deps chromium
+
+      - name: Apply Prisma migrations
+        working-directory: apps/backend
+        run: npm run prisma:migrate:deploy
+
+      - name: Lint backend
+        working-directory: apps/backend
+        run: npm run lint
+
+      - name: Lint frontend
+        working-directory: apps/frontend
+        run: npm run lint
+
+      - name: Typecheck backend
+        working-directory: apps/backend
+        run: npm run typecheck
+
+      - name: Typecheck frontend
+        working-directory: apps/frontend
+        run: npm run typecheck
+
+      - name: Run backend tests
+        working-directory: apps/backend
+        run: npm test
+
+      - name: Run frontend tests
+        working-directory: apps/frontend
+        run: npm test
+
+      - name: Build backend
+        working-directory: apps/backend
+        run: npm run build
+
+      - name: Build frontend
+        working-directory: apps/frontend
+        run: npm run build
+
+      - name: Start backend
+        working-directory: apps/backend
+        run: npm run start > /tmp/promptforge-backend.log 2>&1 &
+
+      - name: Start frontend preview
+        working-directory: apps/frontend
+        run: npm run preview > /tmp/promptforge-frontend.log 2>&1 &
+
+      - name: Wait for app services
+        run: |
+          for attempt in $(seq 1 60); do
+            if curl --silent --fail http://localhost:4000/health >/dev/null; then
+              break
+            fi
+            sleep 1
+          done
+
+          for attempt in $(seq 1 60); do
+            if curl --silent --fail http://localhost:4173/auth >/dev/null; then
+              break
+            fi
+            sleep 1
+          done
+
+          curl --silent --fail http://localhost:4000/health >/dev/null
+          curl --silent --fail http://localhost:4173/auth >/dev/null
+
+      - name: Run frontend UI validation
+        working-directory: apps/frontend
+        run: npm run test:e2e
+
+      - name: Run frontend enhancement benchmark
+        working-directory: apps/frontend
+        run: npm run test:e2e:enhancement
+
+      - name: Upload prompt benchmark artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: promptforge-quality-artifacts
+          path: |
+            /tmp/promptforge-ui-validation.json
+            /tmp/promptforge-ui-enhancement.json
+            /tmp/promptforge-backend.log
+            /tmp/promptforge-frontend.log

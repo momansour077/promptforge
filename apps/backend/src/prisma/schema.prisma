@@ -1,0 +1,103 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String         @id @default(cuid())
+  email         String         @unique
+  passwordHash  String
+  name          String?
+  language      String         @default("en")
+  plan          Plan           @default(FREE)
+  promptsToday  Int            @default(0)
+  lastResetDate DateTime       @default(now())
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  prompts       Prompt[]
+  collections   Collection[]
+  refreshTokens RefreshToken[]
+}
+
+model Prompt {
+  id           String      @id @default(cuid())
+  userId       String
+  user         User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  rawInput     String
+  detectedLang String
+  outputPrompt String      @db.Text
+  promptType   PromptType
+  targetAI     TargetAI    @default(GENERAL)
+  tone         String?
+  domain       String?
+  tokensUsed   Int         @default(0)
+  isFavorited  Boolean     @default(false)
+  isPublic     Boolean     @default(false)
+  collectionId String?
+  collection   Collection? @relation(fields: [collectionId], references: [id])
+  tags         Tag[]
+  createdAt    DateTime    @default(now())
+}
+
+model Collection {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name        String
+  description String?
+  isPublic    Boolean  @default(false)
+  prompts     Prompt[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Tag {
+  id      String   @id @default(cuid())
+  name    String   @unique
+  prompts Prompt[]
+}
+
+model RefreshToken {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+}
+
+enum Plan {
+  FREE
+  PRO
+  ENTERPRISE
+}
+
+enum PromptType {
+  CREATIVE_WRITING
+  CODE_GENERATION
+  DATA_ANALYSIS
+  IMAGE_GENERATION
+  TRANSLATION
+  SUMMARIZATION
+  QA
+  ROLEPLAY
+  RESEARCH
+  BUSINESS
+  GENERAL
+}
+
+enum TargetAI {
+  GENERAL
+  CHATGPT
+  CLAUDE
+  GEMINI
+  MIDJOURNEY
+  STABLE_DIFFUSION
+  DALL_E
+  COPILOT
+}
+
