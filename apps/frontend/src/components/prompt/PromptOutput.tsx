@@ -1,11 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
-import { Check, Clipboard, FolderPlus, RefreshCcw, Save, Share2 } from "lucide-react";
+import { Check, Clipboard, Download, FolderPlus, RefreshCcw, Save, Share2 } from "lucide-react";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
 
 import { collectionService } from "../../services/collectionService";
 import { promptService } from "../../services/promptService";
+import { compactExportFromSections, generateSafeFilename } from "../../lib/exportUtils";
 import type { Collection, GeneratedPrompt } from "../../types";
 import { formatFrameworkLabel, formatPromptTypeLabel } from "../../utils/promptLabels";
 import { Button } from "../ui/button";
@@ -76,14 +77,116 @@ const sectionLabels = {
 export const PromptOutput = ({
   result,
   promptId,
-  copied,
+  copied: externalCopied,
   onCopy,
   onRegenerate
 }: PromptOutputProps) => {
   const { t } = useTranslation();
   const [collections, setCollections] = useState<Collection[]>([]);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [compactCopied, setCompactCopied] = useState(false);
+  const [downloadInProgress, setDownloadInProgress] = useState(false);
   const sectionLocale = result?.detectedLanguage === "ar" ? "ar" : "en";
+
+  // Custom copy functions
+  const handleCopyStructured = useCallback(async () => {
+    if (!result) return;
+    try {
+      await navigator.clipboard.writeText(result.generatedPrompt);
+      toast.success(t("common.copied"));
+      onCopy();
+    } catch {
+      toast.error(t("common.copyFailed"));
+    }
+  }, [result, t, onCopy]);
+
+  const handleCopyCompact = useCallback(async () => {
+    if (!result) return;
+    try {
+      // Convert to compact format
+      const structuredPrompt = {
+        sections: result.sections,
+        generatedPrompt: result.generatedPrompt,
+        detectedLanguage: result.detectedLanguage,
+        promptType: result.promptType,
+        rtlRequired: result.rtlRequired
+      };
+      const compactText = compactExportFromSections(structuredPrompt);
+
+      await navigator.clipboard.writeText(compactText);
+      setCompactCopied(true);
+      toast.success(t("common.copied"));
+      setTimeout(() => setCompactCopied(false), 2000);
+    } catch (err) {
+      // Fallback for browsers without clipboard API
+      const structuredPrompt = {
+        sections: result.sections,
+        generatedPrompt: result.generatedPrompt,
+        detectedLanguage: result.detectedLanguage,
+        promptType: result.promptType,
+        rtlRequired: result.rtlRequired
+      };
+      const compactText = compactExportFromSections(structuredPrompt);
+
+      const textarea = document.createElement('textarea');
+      textarea.value = compactText;
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.appendChild(textarea);
+      textarea.select();
+      try {
+        const success = document.execCommand('copy');
+        if (success) {
+          setCompactCopied(true);
+          toast.success(t("common.copied"));
+          setTimeout(() => setCompactCopied(false), 2000);
+        } else {
+          toast.error(t("common.copyFailed"));
+        }
+      } catch {
+        toast.error(t("common.copyFailed"));
+      }
+      document.body.removeChild(textarea);
+    }
+  }, [result, t]);
+
+  const handleDownloadCompact = useCallback(async () => {
+    if (!result) return;
+
+    try {
+      setDownloadInProgress(true);
+
+      const structuredPrompt = {
+        sections: result.sections,
+        generatedPrompt: result.generatedPrompt,
+        detectedLanguage: result.detectedLanguage,
+        promptType: result.promptType,
+        rtlRequired: result.rtlRequired
+      };
+
+      const compactText = compactExportFromSections(structuredPrompt);
+      const filename = generateSafeFilename(result.promptType, result.detectedLanguage);
+
+      // Create and download the file
+      const blob = new Blob([compactText], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = filename;
+
+      // Append to body, click, and clean up
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+
+      toast.success(t("common.downloadReady"));
+    } catch (err) {
+      toast.error(t("common.downloadFailed"));
+    } finally {
+      setDownloadInProgress(false);
+    }
+  }, [result, t]);
 
   useEffect(() => {
     const loadCollections = async () => {
@@ -127,13 +230,46 @@ export const PromptOutput = ({
         </div>
       </div>
 
+      {/* Export Bar */}
       <div className="flex flex-wrap gap-2">
-        <Button type="button" variant="secondary" onClick={() => void onCopy()} leadingIcon={copied ? <Check className="size-4" /> : <Clipboard className="size-4" />}>
-          {copied ? t("common.copied") : t("common.copy")}
+        <Button
+          type="button"
+          variant="secondary"
+          onClick={handleCopyStructured}
+          leadingIcon={externalCopied ? <Check className="size-4" /> : <Clipboard className="size-4" />}
+          aria-label={t("common.copyStructured")}
+          title={t("common.copyStructured")}
+        >
+          {t("common.copyStructured")}
         </Button>
+
+        <Button
+          type="button"
+          variant="secondary"
+          onClick={handleCopyCompact}
+          leadingIcon={compactCopied ? <Check className="size-4" /> : <Clipboard className="size-4" />}
+          aria-label={t("common.copyCompact")}
+          title={t("common.copyCompact")}
+        >
+          {t("common.copyCompact")}
+        </Button>
+
+        <Button
+          type="button"
+          variant="secondary"
+          onClick={handleDownloadCompact}
+          disabled={downloadInProgress}
+          leadingIcon={<Download className="size-4" />}
+          aria-label={t("common.download")}
+          title={t("common.download")}
+        >
+          {downloadInProgress ? t("common.downloading") : t("common.download")}
+        </Button>
+
         <Button type="button" variant="secondary" onClick={() => promptService.downloadPrompt(result)} leadingIcon={<Save className="size-4" />}>
           {t("common.save")}
         </Button>
+
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
           <DialogTrigger asChild>
             <Button type="button" variant="secondary" leadingIcon={<FolderPlus className="size-4" />}>
@@ -187,6 +323,11 @@ export const PromptOutput = ({
         >
           {t("common.share")}
         </Button>
+      </div>
+
+      {/* Accessible live region for copy confirmation */}
+      <div aria-live="polite" className="sr-only">
+        {(externalCopied || compactCopied) && t("common.copied")}
       </div>
 
       <div
