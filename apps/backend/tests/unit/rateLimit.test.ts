@@ -1,3 +1,4 @@
+import { asAsync } from "../helpers/asyncMock.js";
 import { jest } from "@jest/globals";
 import type { NextFunction, Request, Response } from "express";
 
@@ -10,29 +11,29 @@ const unstableMockModule = (
 
 const prismaMock = {
   user: {
-    findUnique: jest.fn(async () => ({
+    findUnique: jest.fn(asAsync( () => ({
       promptsToday: 0,
       lastResetDate: new Date()
-    })),
-    update: jest.fn(async ({ data }: { data: { promptsToday: number; lastResetDate: Date } }) => ({
+    }))),
+    update: jest.fn(asAsync( ({ data }: { data: { promptsToday: number; lastResetDate: Date } }) => ({
       promptsToday: data.promptsToday,
       lastResetDate: data.lastResetDate
-    }))
+    })))
   }
 };
 
 const redisMock = {
-  get: jest.fn(async (key: string) => store.get(key) ?? null),
-  set: jest.fn(async (key: string, value: string) => {
+  get: jest.fn(asAsync( (key: string) => store.get(key) ?? null)),
+  set: jest.fn(asAsync( (key: string, value: string) => {
     store.set(key, value);
     return "OK";
-  }),
-  incr: jest.fn(async (key: string) => {
+  })),
+  incr: jest.fn(asAsync( (key: string) => {
     const nextValue = Number.parseInt(store.get(key) ?? "0", 10) + 1;
     store.set(key, String(nextValue));
     return nextValue;
-  }),
-  expire: jest.fn(async () => 1)
+  })),
+  expire: jest.fn(asAsync( () => 1))
 };
 
 unstableMockModule("../../src/config/database.js", () => ({

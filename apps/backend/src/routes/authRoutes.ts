@@ -19,6 +19,9 @@ const loginSchema = z.object({
   password: z.string().min(8).max(128)
 });
 
+export type RegisterBody = z.infer<typeof registerSchema>;
+export type LoginBody = z.infer<typeof loginSchema>;
+
 /**
  * @openapi
  * /auth/register:
@@ -116,4 +119,3 @@ authRouter.post("/logout", logout);
 authRouter.get("/me", requireAuth, me);
 
 export default authRouter;
-

@@ -142,9 +142,11 @@ export interface AuthTokens {
   refreshToken: string;
 }
 
-export interface RequestWithBody<TBody> extends Request<Record<string, string>, unknown, TBody> {}
+export type RequestWithBody<TBody> = Request<Record<string, string>, unknown, TBody>;
 
 declare global {
+  // Express request augmentation requires this ambient namespace.
+  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace Express {
     interface Request {
       authUser?: AuthenticatedUser;

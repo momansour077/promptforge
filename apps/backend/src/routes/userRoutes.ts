@@ -33,6 +33,9 @@ const passwordSchema = z
     }
   });
 
+export type ProfileBody = z.infer<typeof profileSchema>;
+export type PasswordBody = z.infer<typeof passwordSchema>;
+
 /**
  * @openapi
  * /user/stats:

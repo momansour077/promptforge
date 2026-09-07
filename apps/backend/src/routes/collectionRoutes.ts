@@ -28,6 +28,9 @@ const addPromptSchema = z.object({
   promptId: z.string().min(1)
 });
 
+export type CollectionBody = z.infer<typeof collectionSchema>;
+export type AddPromptBody = z.infer<typeof addPromptSchema>;
+
 /**
  * @openapi
  * /collections:

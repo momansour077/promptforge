@@ -12,4 +12,4 @@ apps/frontend/.vite
 apps/frontend/playwright-report
 apps/frontend/test-results
 *.log
-
+*.tsbuildinfo

@@ -138,7 +138,7 @@ export interface StatsPayload {
   totalPrompts: number;
   favoriteCount: number;
   tokensUsed: number;
-  dailyUsage: Array<{ date: string; count: number }>;
+  dailyUsage: { date: string; count: number }[];
 }
 
 export interface QuotaPayload {

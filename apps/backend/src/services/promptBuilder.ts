@@ -1861,7 +1861,10 @@ export class PromptBuilder {
     _framework: PromptFramework,
     _isProductBuild: boolean
   ): string {
-    const orderedKeys: Array<keyof PromptSections> = [
+    // These hints were applied when building sections; keep the shared formatter signature.
+    void _framework;
+    void _isProductBuild;
+    const orderedKeys: (keyof PromptSections)[] = [
       "role",
       "objective",
       "context",
@@ -1912,6 +1915,8 @@ export class PromptBuilder {
     _framework: PromptFramework,
     _isProductBuild: boolean
   ): string {
+    void _framework;
+    void _isProductBuild;
     return [
       `<context>\n${this.formatSection("role", sections, language)}\n\n${this.formatSection("objective", sections, language)}\n\n${this.formatSection("context", sections, language)}\n</context>`,
       `<task>\n${this.formatSection("task", sections, language)}\n\n${this.formatSection("deliverable", sections, language)}\n</task>`,
@@ -1959,6 +1964,7 @@ export class PromptBuilder {
     targetAI: TargetAIValue,
     _framework: PromptFramework
   ): string {
+    void _framework;
     const imageLabels =
       language === "ar"
         ? {

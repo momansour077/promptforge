@@ -50,6 +50,8 @@ export const errorHandler = (
   response: Response,
   _next: NextFunction
 ): Response => {
+  // Express identifies error middleware by its four-argument signature.
+  void _next;
   if (error instanceof AppError) {
     return sendError(
       response,

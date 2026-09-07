@@ -130,18 +130,18 @@ describe("aiService", () => {
     expect(result.wordCount).toBe(builtPrompt.wordCount);
     expect(result.estimatedTokens).toBe(360);
 
-    const calls = create.mock.calls as unknown as Array<[{
+    const calls = create.mock.calls as unknown as [{
       max_tokens?: number;
-      messages?: Array<{
+      messages?: {
         role?: string;
         content?: string;
-      }>;
-    }]>;
+      }[];
+    }][];
     const generationCall = calls[2]?.[0];
     const repairCall = calls[3]?.[0];
     const systemMessage = generationCall?.messages?.[0];
     const userMessage = generationCall?.messages?.[1];
-    const userPayload = userMessage?.content ? JSON.parse(userMessage.content) : null;
+    const userPayload: unknown = userMessage?.content ? JSON.parse(userMessage.content) : null;
 
     expect(systemMessage?.role).toBe("system");
     expect(systemMessage?.content).toContain("Use the raw input, the compact analysis, and the draft as scaffolding");
@@ -163,8 +163,8 @@ describe("aiService", () => {
         language: builtPrompt.detectedLanguage
       }
     });
-    expect(userPayload.builderAnalysis).toBeUndefined();
-    expect(userPayload.analysis.tags).toBeUndefined();
+    expect(userPayload).not.toHaveProperty("builderAnalysis");
+    expect(userPayload).not.toHaveProperty("analysis.tags");
     expect(repairCall?.messages?.[0]?.content).toContain("repair prompt drafts");
   });
 
@@ -241,14 +241,14 @@ describe("aiService", () => {
     expect(create).toHaveBeenCalledTimes(2);
     expect(result.generatedPrompt).toBe(builtPrompt.generatedPrompt);
 
-    const repairCall = (create.mock.calls as unknown as Array<[{
-      messages?: Array<{
+    const repairCall = (create.mock.calls as unknown as [{
+      messages?: {
         role?: string;
         content?: string;
-      }>;
-    }]>).at(1)?.[0];
+      }[];
+    }][]).at(1)?.[0];
     const repairSystemMessage = repairCall?.messages?.[0];
-    const repairUserPayload = repairCall?.messages?.[1]?.content
+    const repairUserPayload: unknown = repairCall?.messages?.[1]?.content
       ? JSON.parse(repairCall.messages[1].content)
       : null;
 
@@ -257,7 +257,7 @@ describe("aiService", () => {
       rawInput: "write a creative story prompt about a lonely robot",
       candidatePrompt: "[ROLE]\nWeak draft without the required sections."
     });
-    expect(repairUserPayload?.issues?.[0]?.code).toBeDefined();
-    expect(repairUserPayload?.requiredMarkers).toContain("[TASK]");
+    expect(repairUserPayload).toHaveProperty("issues.0.code", expect.any(String));
+    expect(repairUserPayload).toHaveProperty("requiredMarkers", expect.arrayContaining(["[TASK]"]));
   });
 });

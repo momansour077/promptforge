@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 import { useAuth } from "../../hooks/useAuth";
+import { uiAction } from "../../utils/uiAction";
 import { Button } from "../ui/button";
 import { Card } from "../ui/card";
 import { Input } from "../ui/input";
@@ -37,24 +38,23 @@ export const LoginForm = () => {
       <Button
         type="button"
         disabled={loading}
-        onClick={async () => {
+        onClick={uiAction(async () => {
           setLoading(true);
 
           try {
             await login(form);
             toast.success(t("toast.loginSuccess"));
-            navigate("/dashboard");
+            await navigate("/dashboard");
           } catch (error) {
             const message = error instanceof Error ? error.message : t("errors.generic");
             toast.error(message);
           } finally {
             setLoading(false);
           }
-        }}
+        }, t("errors.generic"))}
       >
         {loading ? t("common.loading") : t("auth.login")}
       </Button>
     </Card>
   );
 };
-

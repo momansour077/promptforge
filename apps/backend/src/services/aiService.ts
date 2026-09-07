@@ -24,8 +24,6 @@ const cachedAiResponseSchema = z.object({
   estimatedTokens: z.number().nonnegative()
 });
 
-type CachedAIResponse = z.infer<typeof cachedAiResponseSchema>;
-
 const aiResponseFormat = {
   type: "json_schema" as const,
   json_schema: {
@@ -99,7 +97,7 @@ interface CacheLookupResult {
 }
 
 declare global {
-  // eslint-disable-next-line no-var
+
   var __promptforgePromptCache__: Map<string, InMemoryCacheEntry> | undefined;
 }
 

@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 import { useAuth } from "../../hooks/useAuth";
+import { uiAction } from "../../utils/uiAction";
 import { useLanguage } from "../../hooks/useLanguage";
 import { useUIStore } from "../../store/uiStore";
 import { Button } from "../ui/button";
@@ -18,7 +19,7 @@ export const Header = () => {
 
   const handleLogout = async () => {
     await logout();
-    navigate("/");
+    await navigate("/");
   };
 
   return (
@@ -46,7 +47,7 @@ export const Header = () => {
           {theme === "dark" ? <SunMedium className="size-4" /> : <MoonStar className="size-4" />}
         </Button>
         {user ? (
-          <Button type="button" variant="secondary" onClick={() => void handleLogout()}>
+          <Button type="button" variant="secondary" onClick={uiAction(handleLogout, t("errors.generic"))}>
             {t("nav.signOut")}
           </Button>
         ) : (

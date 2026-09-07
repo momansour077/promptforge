@@ -1,7 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { compactExport, compactExportFromSections, generateSafeFilename } from './exportUtils';
 import type { StructuredPrompt } from './exportUtils';
-import type { PromptSectionMap, Language, PromptType } from '../types';
 
 // Mock structured prompt for testing
 const createMockPrompt = (overrides: Partial<StructuredPrompt> = {}): StructuredPrompt => ({
@@ -26,8 +25,8 @@ const createMockPrompt = (overrides: Partial<StructuredPrompt> = {}): Structured
     executionApproach: '',
   },
   generatedPrompt: '[ROLE]\nYou are a senior developer.\n\n[OBJECTIVE]\nBuild a great product.\n\n[CONTEXT]\nThe user wants a solution.\n\n[TASK]\nCreate the implementation.\n\n[CONSTRAINTS]\nMust be fast and reliable.',
-  detectedLanguage: 'en' as Language,
-  promptType: 'CODE_GENERATION' as PromptType,
+  detectedLanguage: 'en',
+  promptType: 'CODE_GENERATION',
   rtlRequired: false,
   ...overrides,
 });
@@ -55,8 +54,8 @@ const createMockArabicPrompt = (overrides: Partial<StructuredPrompt> = {}): Stru
     executionApproach: '',
   },
   generatedPrompt: '[الدور]\nأنت مهندس برمجيات أول.\n\n[الهدف]\nبناء منتج رائع.\n\n[السياق]\nالمستخدم يريد حلاً.\n\n[المهمة]\nإنشاء التنفيذ.\n\n[القيود]\nيجب أن يكون سريعًا وموثوقًا.',
-  detectedLanguage: 'ar' as Language,
-  promptType: 'CODE_GENERATION' as PromptType,
+  detectedLanguage: 'ar',
+  promptType: 'CODE_GENERATION',
   rtlRequired: true,
   ...overrides,
 });
