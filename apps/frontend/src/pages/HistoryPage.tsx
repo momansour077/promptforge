@@ -7,6 +7,7 @@ import { Card } from "../components/ui/card";
 import { Input } from "../components/ui/input";
 import { Select } from "../components/ui/select";
 import { useHistory } from "../hooks/useHistory";
+import { uiAction } from "../utils/uiAction";
 import type { Language, PromptType } from "../types";
 import { formatPromptTypeLabel } from "../utils/promptLabels";
 
@@ -78,9 +79,9 @@ export const HistoryPage = () => {
         items={filteredItems}
         loading={loading}
         regeneratingId={regeneratingId}
-        onRegenerate={regeneratePrompt}
-        onToggleFavorite={toggleFavorite}
-        onDelete={removePrompt}
+        onRegenerate={uiAction(regeneratePrompt, t("errors.generic"))}
+        onToggleFavorite={uiAction(toggleFavorite, t("errors.generic"))}
+        onDelete={uiAction(removePrompt, t("errors.generic"))}
       />
     </section>
   );

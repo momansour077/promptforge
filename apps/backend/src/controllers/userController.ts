@@ -1,4 +1,6 @@
 import type { Request, Response } from "express";
+import type { ProfileBody, PasswordBody } from "../routes/userRoutes.js";
+import type { RequestWithBody } from "../types/index.js";
 import validator from "validator";
 
 import { prisma } from "../config/database.js";
@@ -6,8 +8,9 @@ import { AppError } from "../middleware/errorHandler.js";
 import { getQuotaState } from "../middleware/rateLimit.js";
 import { comparePassword, hashPassword } from "../utils/hashHelper.js";
 import { sendSuccess } from "../utils/responseHelper.js";
+import { serializeUser } from "../utils/userSerializer.js";
 
-const buildDailyUsage = async (userId: string): Promise<Array<{ date: string; count: number }>> => {
+const buildDailyUsage = async (userId: string): Promise<{ date: string; count: number }[]> => {
   const start = new Date();
   start.setUTCDate(start.getUTCDate() - 29);
   start.setUTCHours(0, 0, 0, 0);
@@ -70,7 +73,7 @@ export const getStats = async (request: Request, response: Response): Promise<Re
   });
 };
 
-export const updateProfile = async (request: Request, response: Response): Promise<Response> => {
+export const updateProfile = async (request: RequestWithBody<ProfileBody>, response: Response): Promise<Response> => {
   if (!request.authUser) {
     throw new AppError(401, "UNAUTHORIZED", "Authentication is required.");
   }
@@ -88,10 +91,10 @@ export const updateProfile = async (request: Request, response: Response): Promi
     }
   });
 
-  return sendSuccess(response, { user });
+  return sendSuccess(response, { user: serializeUser(user) });
 };
 
-export const changePassword = async (request: Request, response: Response): Promise<Response> => {
+export const changePassword = async (request: RequestWithBody<PasswordBody>, response: Response): Promise<Response> => {
   if (!request.authUser) {
     throw new AppError(401, "UNAUTHORIZED", "Authentication is required.");
   }

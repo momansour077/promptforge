@@ -25,9 +25,10 @@ export const attachCsrfCookie = (
   response: Response,
   next: NextFunction
 ): void => {
+  const existingCookie: unknown = request.cookies[env.CSRF_COOKIE_NAME];
   const csrfValue =
-    typeof request.cookies[env.CSRF_COOKIE_NAME] === "string"
-      ? request.cookies[env.CSRF_COOKIE_NAME]
+    typeof existingCookie === "string"
+      ? existingCookie
       : createCsrfValue();
 
   request.csrfTokenValue = csrfValue;
@@ -50,7 +51,7 @@ export const requireCsrfToken = (
     return;
   }
 
-  const cookieToken = request.cookies[env.CSRF_COOKIE_NAME];
+  const cookieToken: unknown = request.cookies[env.CSRF_COOKIE_NAME];
   const headerToken = request.header("x-csrf-token");
 
   if (typeof cookieToken !== "string" || typeof headerToken !== "string") {
@@ -71,4 +72,3 @@ export const requireCsrfToken = (
 
   next();
 };
-

@@ -5,7 +5,7 @@ import { env } from "./env.js";
 import { logger } from "../utils/logger.js";
 
 declare global {
-  // eslint-disable-next-line no-var
+
   var __promptforgeRedis__: Redis | undefined;
 }
 

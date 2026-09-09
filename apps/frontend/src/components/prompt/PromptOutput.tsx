@@ -12,7 +12,8 @@ import { formatFrameworkLabel, formatPromptTypeLabel } from "../../utils/promptL
 import { Button } from "../ui/button";
 import { Card } from "../ui/card";
 import { Badge } from "../ui/badge";
-import { Dialog, DialogContent, DialogFooter, DialogTrigger } from "../ui/dialog";
+import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
+import { uiAction } from "../../utils/uiAction";
 
 interface PromptOutputProps {
   result: GeneratedPrompt | null;
@@ -117,7 +118,7 @@ export const PromptOutput = ({
       setCompactCopied(true);
       toast.success(t("common.copied"));
       setTimeout(() => setCompactCopied(false), 2000);
-    } catch (err) {
+    } catch {
       // Fallback for browsers without clipboard API
       const structuredPrompt = {
         sections: result.sections,
@@ -150,7 +151,7 @@ export const PromptOutput = ({
     }
   }, [result, t]);
 
-  const handleDownloadCompact = useCallback(async () => {
+  const handleDownloadCompact = useCallback(() => {
     if (!result) return;
 
     try {
@@ -181,7 +182,7 @@ export const PromptOutput = ({
       URL.revokeObjectURL(url);
 
       toast.success(t("common.downloadReady"));
-    } catch (err) {
+    } catch {
       toast.error(t("common.downloadFailed"));
     } finally {
       setDownloadInProgress(false);
@@ -235,7 +236,7 @@ export const PromptOutput = ({
         <Button
           type="button"
           variant="secondary"
-          onClick={handleCopyStructured}
+          onClick={uiAction(handleCopyStructured, t("common.copyFailed"))}
           leadingIcon={externalCopied ? <Check className="size-4" /> : <Clipboard className="size-4" />}
           aria-label={t("common.copyStructured")}
           title={t("common.copyStructured")}
@@ -246,7 +247,7 @@ export const PromptOutput = ({
         <Button
           type="button"
           variant="secondary"
-          onClick={handleCopyCompact}
+          onClick={uiAction(handleCopyCompact, t("common.copyFailed"))}
           leadingIcon={compactCopied ? <Check className="size-4" /> : <Clipboard className="size-4" />}
           aria-label={t("common.copyCompact")}
           title={t("common.copyCompact")}
@@ -286,7 +287,7 @@ export const PromptOutput = ({
                   key={collection.id}
                   type="button"
                   className="flex w-full items-center justify-between rounded-2xl border border-white/10 bg-[var(--bg-muted)] px-4 py-3 text-left transition hover:border-accent"
-                  onClick={async () => {
+                  onClick={uiAction(async () => {
                     if (!promptId) {
                       return;
                     }
@@ -294,7 +295,7 @@ export const PromptOutput = ({
                     await collectionService.addPrompt(collection.id, promptId);
                     toast.success(t("toast.promptAdded"));
                     setDialogOpen(false);
-                  }}
+                  }, t("errors.generic"))}
                 >
                   <div>
                     <p className="font-medium">{collection.name}</p>
@@ -315,10 +316,10 @@ export const PromptOutput = ({
         <Button
           type="button"
           variant="secondary"
-          onClick={async () => {
+          onClick={uiAction(async () => {
             await navigator.clipboard.writeText(result.generatedPrompt);
             toast.success(t("dashboard.shareReady"));
-          }}
+          }, t("common.copyFailed"))}
           leadingIcon={<Share2 className="size-4" />}
         >
           {t("common.share")}

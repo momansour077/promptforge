@@ -44,6 +44,7 @@ services:
       - .env
     environment:
       NODE_ENV: production
+      HOST: 0.0.0.0
       PORT: 4000
       DATABASE_URL: postgresql://promptforge:promptforge@postgres:5432/promptforge?schema=public
       REDIS_URL: redis://redis:6379
@@ -96,4 +97,3 @@ volumes:
 networks:
   promptforge:
     driver: bridge
-

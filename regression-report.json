@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-04-28T14:32:37.926Z",
+  "generatedAt": "2026-09-09T17:05:00.676Z",
   "status": "clean",
-  "baselinePath": "/Users/mohamedmansour/promptforge/test/snapshots/prompt-baseline.json",
-  "reportPath": "/Users/mohamedmansour/promptforge/regression-report.json",
+  "baselinePath": "test/snapshots/prompt-baseline.json",
+  "reportPath": "regression-report.json",
   "summary": {
     "seedCount": 12,
     "flaggedSeedCount": 0,

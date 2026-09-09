@@ -8,7 +8,7 @@ import { AppError } from "../middleware/errorHandler.js";
 import { aiService } from "../services/aiService.js";
 import { promptBuilder } from "../services/promptBuilder.js";
 import { incrementPromptQuota, setQuotaHeaders } from "../middleware/rateLimit.js";
-import type { BuildInput, BuiltPrompt, SupportedLanguage, TargetAIValue } from "../types/index.js";
+import type { BuildInput, BuiltPrompt, GeneratePromptBody, RequestWithBody, SupportedLanguage, TargetAIValue } from "../types/index.js";
 import { sendSuccess } from "../utils/responseHelper.js";
 
 const GENERATED_PROMPT_CACHE_TTL_MS = 60 * 60 * 1000;
@@ -23,7 +23,7 @@ interface GeneratedPromptCacheEntry {
 }
 
 declare global {
-  // eslint-disable-next-line no-var
+
   var __promptforgeGeneratedPromptCache__:
     | Map<string, GeneratedPromptCacheEntry>
     | undefined;
@@ -156,7 +156,7 @@ const buildGeneratedPrompt = async ({
   };
 };
 
-export const generatePrompt = async (request: Request, response: Response): Promise<Response> => {
+export const generatePrompt = async (request: RequestWithBody<GeneratePromptBody>, response: Response): Promise<Response> => {
   if (!request.authUser) {
     throw new AppError(401, "UNAUTHORIZED", "Authentication is required.");
   }

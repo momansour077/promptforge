@@ -1,3 +1,4 @@
+import { asAsync } from "../helpers/asyncMock.js";
 import { jest } from "@jest/globals";
 import supertest from "supertest";
 
@@ -27,7 +28,16 @@ const refreshSessions = new Map<string, string>();
 
 const prismaMock = {
   user: {
-    findUnique: jest.fn(async ({ where }: { where: { id?: string; email?: string } }) => {
+    update: jest.fn(asAsync(({ where, data }: {
+      where: { id: string }; data: { name: string | null; language: "en" | "ar" }
+    }) => {
+      const user = users.get(where.id);
+      if (!user) throw new Error("User missing");
+      const updated = { ...user, ...data, updatedAt: new Date() };
+      users.set(where.id, updated);
+      return updated;
+    })),
+    findUnique: jest.fn(asAsync( ({ where }: { where: { id?: string; email?: string } }) => {
       if (where.id) {
         return Array.from(users.values()).find((user) => user.id === where.id) ?? null;
       }
@@ -37,8 +47,8 @@ const prismaMock = {
       }
 
       return null;
-    }),
-    create: jest.fn(async ({ data }: { data: { email: string; passwordHash: string; name: string | null; language: "en" | "ar" } }) => {
+    })),
+    create: jest.fn(asAsync( ({ data }: { data: { email: string; passwordHash: string; name: string | null; language: "en" | "ar" } }) => {
       const now = new Date();
       const user = {
         id: `user-${users.size + 1}`,
@@ -53,10 +63,10 @@ const prismaMock = {
       };
       users.set(user.id, user);
       return user;
-    })
+    }))
   },
   refreshToken: {
-    create: jest.fn(async ({ data }: { data: { token: string; userId: string; expiresAt: Date } }) => {
+    create: jest.fn(asAsync( ({ data }: { data: { token: string; userId: string; expiresAt: Date } }) => {
       const record = {
         token: data.token,
         userId: data.userId,
@@ -68,8 +78,8 @@ const prismaMock = {
         ...record,
         createdAt: new Date()
       };
-    }),
-    findUnique: jest.fn(async ({ where }: { where: { token: string } }) => {
+    })),
+    findUnique: jest.fn(asAsync( ({ where }: { where: { token: string } }) => {
       const record = refreshTokens.get(where.token);
 
       if (!record) {
@@ -84,8 +94,8 @@ const prismaMock = {
         createdAt: new Date(),
         user: users.get(record.userId) ?? null
       };
-    }),
-    deleteMany: jest.fn(async ({ where }: { where: { token?: string; userId?: string } }) => {
+    })),
+    deleteMany: jest.fn(asAsync( ({ where }: { where: { token?: string; userId?: string } }) => {
       let count = 0;
 
       Array.from(refreshTokens.entries()).forEach(([token, record]) => {
@@ -96,8 +106,8 @@ const prismaMock = {
       });
 
       return { count };
-    }),
-    delete: jest.fn(async ({ where }: { where: { token: string } }) => {
+    })),
+    delete: jest.fn(asAsync( ({ where }: { where: { token: string } }) => {
       const record = refreshTokens.get(where.token);
 
       if (!record) {
@@ -106,27 +116,27 @@ const prismaMock = {
 
       refreshTokens.delete(where.token);
       return record;
-    })
+    }))
   },
-  $transaction: jest.fn(async (operations: Array<Promise<unknown>>) => Promise.all(operations)),
-  $connect: jest.fn(async () => undefined),
-  $disconnect: jest.fn(async () => undefined)
+  $transaction: jest.fn(asAsync( (operations: Promise<unknown>[]) => Promise.all(operations))),
+  $connect: jest.fn(asAsync( () => undefined)),
+  $disconnect: jest.fn(asAsync( () => undefined))
 };
 
 const redisMock = {
   status: "ready",
   on: jest.fn(),
-  connect: jest.fn(async () => undefined),
-  quit: jest.fn(async () => undefined),
-  set: jest.fn(async (key: string, value: string) => {
+  connect: jest.fn(asAsync( () => undefined)),
+  quit: jest.fn(asAsync( () => undefined)),
+  set: jest.fn(asAsync( (key: string, value: string) => {
     refreshSessions.set(key, value);
     return "OK";
-  }),
-  get: jest.fn(async (key: string) => refreshSessions.get(key) ?? null),
-  del: jest.fn(async (key: string) => {
+  })),
+  get: jest.fn(asAsync( (key: string) => refreshSessions.get(key) ?? null)),
+  del: jest.fn(asAsync( (key: string) => {
     refreshSessions.delete(key);
     return 1;
-  })
+  }))
 };
 
 unstableMockModule("../../src/config/database.js", () => ({
@@ -135,7 +145,7 @@ unstableMockModule("../../src/config/database.js", () => ({
 
 unstableMockModule("../../src/config/redis.js", () => ({
   redis: redisMock,
-  connectRedis: jest.fn(async () => undefined)
+  connectRedis: jest.fn(asAsync( () => undefined))
 }));
 
 describe("authController integration", () => {
@@ -151,19 +161,19 @@ describe("authController integration", () => {
     const agent = supertest.agent(createApp());
 
     const healthResponse = await agent.get("/health");
-    const rawSetCookieHeader = healthResponse.headers["set-cookie"];
+    const rawSetCookieHeader: unknown = healthResponse.headers["set-cookie"];
     const setCookieHeader = Array.isArray(rawSetCookieHeader)
-      ? rawSetCookieHeader
-      : [rawSetCookieHeader];
+      ? rawSetCookieHeader.filter((value): value is string => typeof value === "string")
+      : typeof rawSetCookieHeader === "string" ? [rawSetCookieHeader] : [];
     const csrfCookie = setCookieHeader.find((cookie) => cookie?.startsWith("promptforge_csrf="));
-    const csrfToken = csrfCookie?.split(";")[0].split("=")[1];
+    const csrfToken = csrfCookie?.split(";")[0]?.split("=")[1];
 
     expect(csrfToken).toBeDefined();
 
     const registerResponse = await agent
       .post("/api/auth/register")
       .set("Content-Type", "application/json; charset=utf-8")
-      .set("x-csrf-token", csrfToken as string)
+      .set("x-csrf-token", csrfToken!)
       .send({
         email: "user@example.com",
         password: "super-secret-password",
@@ -172,36 +182,52 @@ describe("authController integration", () => {
       });
 
     expect(registerResponse.status).toBe(201);
-    expect(registerResponse.body.data.user.email).toBe("user@example.com");
+    expect(registerResponse.body).not.toHaveProperty("data.user.passwordHash");
+    expect(registerResponse.body).toHaveProperty("data.user.email", "user@example.com");
 
     const loginResponse = await agent
       .post("/api/auth/login")
       .set("Content-Type", "application/json; charset=utf-8")
-      .set("x-csrf-token", csrfToken as string)
+      .set("x-csrf-token", csrfToken!)
       .send({
         email: "user@example.com",
         password: "super-secret-password"
       });
 
     expect(loginResponse.status).toBe(200);
-    expect(loginResponse.body.data.user.email).toBe("user@example.com");
+    expect(loginResponse.body).not.toHaveProperty("data.user.passwordHash");
+    expect(loginResponse.body).toHaveProperty("data.user.email", "user@example.com");
+
+    const currentUserResponse = await agent.get("/api/auth/me");
+    expect(currentUserResponse.status).toBe(200);
+    expect(currentUserResponse.body).not.toHaveProperty("data.user.passwordHash");
+    expect(currentUserResponse.body).toHaveProperty("data.user.id", "user-1");
+
+    const profileResponse = await agent.put("/api/user/profile")
+      .set("x-csrf-token", csrfToken!)
+      .send({ name: "Updated User", language: "ar" });
+    expect(profileResponse.status).toBe(200);
+    expect(profileResponse.body).not.toHaveProperty("data.user.passwordHash");
+    expect(profileResponse.body).toHaveProperty("data.user.name", "Updated User");
+    expect(profileResponse.body).toHaveProperty("data.user.language", "ar");
 
     const refreshResponse = await agent
       .post("/api/auth/refresh")
       .set("Content-Type", "application/json; charset=utf-8")
-      .set("x-csrf-token", csrfToken as string)
+      .set("x-csrf-token", csrfToken!)
       .send({});
 
     expect(refreshResponse.status).toBe(200);
-    expect(refreshResponse.body.data.user.id).toBe("user-1");
+    expect(refreshResponse.body).not.toHaveProperty("data.user.passwordHash");
+    expect(refreshResponse.body).toHaveProperty("data.user.id", "user-1");
 
     const logoutResponse = await agent
       .post("/api/auth/logout")
       .set("Content-Type", "application/json; charset=utf-8")
-      .set("x-csrf-token", csrfToken as string)
+      .set("x-csrf-token", csrfToken!)
       .send({});
 
     expect(logoutResponse.status).toBe(200);
-    expect(logoutResponse.body.data.message).toMatch(/Logged out/i);
+    expect(logoutResponse.body).toHaveProperty("data.message", expect.stringMatching(/Logged out/i));
   }, 20000);
 });

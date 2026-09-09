@@ -177,8 +177,8 @@ export const generateSafeFilename = (taskType: string, language: string): string
     ar: 'ar',
   };
 
-  const safeTaskType = taskTypeMap[taskType] || taskType.toLowerCase().replace(/[^a-z0-9]/g, '_');
-  const safeLanguage = languageMap[language] || language.toLowerCase().replace(/[^a-z0-9]/g, '_');
+  const safeTaskType = taskTypeMap[taskType] ?? taskType.toLowerCase().replace(/[^a-z0-9]/g, '_');
+  const safeLanguage = languageMap[language] ?? language.toLowerCase().replace(/[^a-z0-9]/g, '_');
 
   return `${safeTaskType}-${safeLanguage}-prompt.txt`;
 };
@@ -227,7 +227,7 @@ export const compactExportFromSections = (prompt: StructuredPrompt): string => {
 
   const processedSections: string[] = [];
 
-  for (const [key, value] of Object.entries(sections)) {
+  for (const value of Object.values(sections)) {
     // Skip undefined or non-string values, or empty strings
     if (typeof value !== 'string' || value.trim().length === 0) {
       continue;

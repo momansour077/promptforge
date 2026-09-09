@@ -5,6 +5,7 @@ loadDotenv();
 
 const envSchema = z.object({
   NODE_ENV: z.enum(["development", "test", "production"]),
+  HOST: z.string().min(1).default("0.0.0.0"),
   PORT: z.coerce.number().int().positive(),
   DATABASE_URL: z.string().min(1),
   REDIS_URL: z.string().min(1),

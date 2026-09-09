@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { uiAction } from "../utils/uiAction";
 
 import { DndContext, useDroppable } from "@dnd-kit/core";
+import type { DragEndEvent } from "@dnd-kit/core";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
 
@@ -18,7 +20,7 @@ const getErrorMessage = (error: unknown, fallback: string): string => {
     typeof error === "object" &&
     error !== null &&
     "message" in error &&
-    typeof (error as { message: unknown }).message === "string"
+    typeof (error).message === "string"
   ) {
     return (error as { message: string }).message;
   }
@@ -79,7 +81,7 @@ export const CollectionsPage = () => {
     description: ""
   });
 
-  const loadData = async () => {
+  const loadData = useCallback(async () => {
     setLoading(true);
 
     try {
@@ -95,11 +97,11 @@ export const CollectionsPage = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [t]);
 
   useEffect(() => {
     void loadData();
-  }, []);
+  }, [loadData]);
 
   return (
     <section className="space-y-6">
@@ -135,7 +137,7 @@ export const CollectionsPage = () => {
               <Button
                 type="button"
                 disabled={savingCollection}
-                onClick={async () => {
+                onClick={uiAction(async () => {
                   setSavingCollection(true);
 
                   try {
@@ -149,7 +151,7 @@ export const CollectionsPage = () => {
                   } finally {
                     setSavingCollection(false);
                   }
-                }}
+                }, t("errors.generic"))}
               >
                 {t("common.create")}
               </Button>
@@ -159,7 +161,7 @@ export const CollectionsPage = () => {
       </div>
 
       <DndContext
-        onDragEnd={async (event) => {
+        onDragEnd={uiAction(async (event: DragEndEvent) => {
           const collectionId = event.over?.id;
           const promptId = String(event.active.id);
 
@@ -178,7 +180,7 @@ export const CollectionsPage = () => {
           } finally {
             setSyncingPromptId(null);
           }
-        }}
+        }, t("errors.generic"))}
       >
         <div className="grid gap-6 lg:grid-cols-[0.8fr_1.2fr]">
           <Card className="space-y-4 p-6">
@@ -208,7 +210,7 @@ export const CollectionsPage = () => {
                   key={collection.id}
                   collection={collection}
                   deleting={removingCollectionId === collection.id}
-                  onDelete={async (collectionId) => {
+                  onDelete={uiAction(async (collectionId: string) => {
                     setRemovingCollectionId(collectionId);
 
                     try {
@@ -220,7 +222,7 @@ export const CollectionsPage = () => {
                     } finally {
                       setRemovingCollectionId(null);
                     }
-                  }}
+                  }, t("errors.generic"))}
                 />
               ))
             ) : (

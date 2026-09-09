@@ -1,4 +1,6 @@
 import type { Request, Response } from "express";
+import type { CollectionBody, AddPromptBody } from "../routes/collectionRoutes.js";
+import type { RequestWithBody } from "../types/index.js";
 
 import { prisma } from "../config/database.js";
 import { AppError } from "../middleware/errorHandler.js";
@@ -28,7 +30,7 @@ export const listCollections = async (request: Request, response: Response): Pro
   return sendSuccess(response, { collections });
 };
 
-export const createCollection = async (request: Request, response: Response): Promise<Response> => {
+export const createCollection = async (request: RequestWithBody<CollectionBody>, response: Response): Promise<Response> => {
   if (!request.authUser) {
     throw new AppError(401, "UNAUTHORIZED", "Authentication is required.");
   }
@@ -37,7 +39,7 @@ export const createCollection = async (request: Request, response: Response): Pr
     data: {
       userId: request.authUser.userId,
       name: request.body.name,
-      description: request.body.description,
+      description: request.body.description ?? null,
       isPublic: request.body.isPublic ?? false
     }
   });
@@ -75,7 +77,7 @@ export const getCollection = async (request: Request, response: Response): Promi
   return sendSuccess(response, { collection });
 };
 
-export const updateCollection = async (request: Request, response: Response): Promise<Response> => {
+export const updateCollection = async (request: RequestWithBody<CollectionBody>, response: Response): Promise<Response> => {
   if (!request.authUser) {
     throw new AppError(401, "UNAUTHORIZED", "Authentication is required.");
   }
@@ -88,8 +90,8 @@ export const updateCollection = async (request: Request, response: Response): Pr
     },
     data: {
       name: request.body.name,
-      description: request.body.description,
-      isPublic: request.body.isPublic
+      ...(request.body.description === undefined ? {} : { description: request.body.description }),
+      ...(request.body.isPublic === undefined ? {} : { isPublic: request.body.isPublic })
     }
   });
 
@@ -127,7 +129,7 @@ export const deleteCollection = async (request: Request, response: Response): Pr
 };
 
 export const addPromptToCollection = async (
-  request: Request,
+  request: RequestWithBody<AddPromptBody>,
   response: Response
 ): Promise<Response> => {
   if (!request.authUser) {

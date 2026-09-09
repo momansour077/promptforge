@@ -1,4 +1,6 @@
 import type { Request, Response } from "express";
+import type { RegisterBody, LoginBody } from "../routes/authRoutes.js";
+import type { RequestWithBody } from "../types/index.js";
 import validator from "validator";
 
 import { prisma } from "../config/database.js";
@@ -13,30 +15,7 @@ import {
   verifyRefreshToken
 } from "../utils/jwtHelper.js";
 import { sendSuccess } from "../utils/responseHelper.js";
-
-const serializeUser = (user: {
-  id: string;
-  email: string;
-  name: string | null;
-  language: string;
-  plan: string;
-  promptsToday: number;
-  createdAt: Date;
-  updatedAt: Date;
-}): {
-  id: string;
-  email: string;
-  name: string | null;
-  language: string;
-  plan: string;
-  promptsToday: number;
-  createdAt: string;
-  updatedAt: string;
-} => ({
-  ...user,
-  createdAt: user.createdAt.toISOString(),
-  updatedAt: user.updatedAt.toISOString()
-});
+import { serializeUser } from "../utils/userSerializer.js";
 
 const getRefreshKey = (tokenHashValue: string): string => `session:refresh:${tokenHashValue}`;
 
@@ -93,7 +72,7 @@ const removeRefreshToken = async (refreshToken: string): Promise<void> => {
   await deleteRefreshSession(tokenHashValue);
 };
 
-export const register = async (request: Request, response: Response): Promise<Response> => {
+export const register = async (request: RequestWithBody<RegisterBody>, response: Response): Promise<Response> => {
   const normalizedEmail = validator.normalizeEmail(request.body.email);
   const email = typeof normalizedEmail === "string" ? normalizedEmail : "";
   const name = request.body.name ? validator.trim(request.body.name) : null;
@@ -138,7 +117,7 @@ export const register = async (request: Request, response: Response): Promise<Re
   }, 201);
 };
 
-export const login = async (request: Request, response: Response): Promise<Response> => {
+export const login = async (request: RequestWithBody<LoginBody>, response: Response): Promise<Response> => {
   const normalizedEmail = validator.normalizeEmail(request.body.email);
   const email = typeof normalizedEmail === "string" ? normalizedEmail : "";
   const password = request.body.password;

@@ -1,219 +1,138 @@
 # PromptForge
 
-PromptForge is a full-stack prompt engineering application that turns rough English or Arabic ideas into structured, model-aware AI prompts. It includes secure cookie-based authentication, saved prompt history, collections, daily quota enforcement, Mistral-backed prompt enhancement, and a bilingual React dashboard with RTL support.
+**A bilingual English/Arabic prompt application built with React and TypeScript.**
 
-## Features
+PromptForge turns rough ideas into structured, model-aware prompts. It combines a
+deterministic prompt builder with Mistral-backed enhancement, saved history,
+collections, authentication, and usage quotas.
 
-- React 18 + Vite frontend with Tailwind UI, Zustand state, i18next, and full Arabic RTL support
-- Express + TypeScript backend with Prisma/PostgreSQL, Redis-backed quotas, JWT auth, CSRF protection, and Helmet/CORS hardening
-- PromptBuilder engine that classifies intent, chooses a framework, and formats prompts for Claude, ChatGPT, Gemini, Copilot, and major image models
-- Mistral Large wrapper with retries, error classification, JSON-schema response enforcement, and streaming support
-- Prompt history, favorites, collections, user stats, usage charts, and offline history reading via a service worker
-- Dockerized local stack plus GitHub Actions for CI and container deployment
+Start with [the engineering reviewer guide](docs/REVIEWER_GUIDE.md) and the
+[dated validation record](docs/VALIDATION_2026-09-09.md). This is a
+portfolio/development project, not a claim of production readiness.
+
+## See it working
+
+Actual Chromium captures from the isolated English/Arabic browser tests, using
+synthetic input and a test account. Prompt generation here uses the deterministic
+builder; these are not screenshots of a paid model integration.
+
+| English input and structured output | Arabic input and structured output |
+| --- | --- |
+| ![English prompt workflow](docs/assets/promptforge-english.png) | ![Arabic prompt workflow](docs/assets/promptforge-arabic.png) |
+
+## What to inspect
+
+| Component | Implementation | Evidence |
+| --- | --- | --- |
+| Prompt construction | Backend `promptBuilder.ts` | Unit tests and 12 English/Arabic structural regression seeds |
+| Model-output handling | Backend `aiService.ts` | Mocked generation, quality-check, and repair tests |
+| Account boundaries | Controllers, Zod schemas, `userSerializer.ts` | Route tests and exclusion of password hashes from responses |
+| Interface | React, Vite, Zustand, i18next, Tailwind | 30 component/hook tests; real Chromium checks for English and Arabic |
+| Async interactions | Frontend `uiAction.ts` | Success, rejected promise, synchronous failure, and fallback tests |
+| Storage | Prisma/PostgreSQL and Redis | Fresh real database migrations and browser-created records; unit/API tests also use doubles |
 
 ## Architecture
 
 ```text
-┌───────────────────────────────┐
-│ Browser / PromptForge UI      │
-│ React + Vite + Zustand + i18n │
-└──────────────┬────────────────┘
-               │ HTTPS / cookies / CSRF header
-┌──────────────▼────────────────┐
-│ Express API                   │
-│ Auth · PromptBuilder · Swagger│
-└───────┬───────────┬───────────┘
-        │           │
-        │           └──────────────► Mistral API
-        │
-        ├──────────────────────────► PostgreSQL via Prisma
-        │
-        └──────────────────────────► Redis for quotas and session cache
+React UI -> Express API -> deterministic PromptBuilder -> Mistral API
+                       -> PostgreSQL (Prisma): users, prompts, collections
+                       -> Redis: quotas and refresh-session cache
 ```
 
-## Project layout
+The UI uses cookies and a CSRF header. Zod validates request bodies. Tests do not
+establish that every security control is complete.
 
-```text
-promptforge/
-├── apps/
-│   ├── backend/
-│   └── frontend/
-├── docker-compose.yml
-├── .env.example
-└── .github/workflows/
-```
+## Reproduce local checks
 
-## Prerequisites
+Tested on macOS arm64 with **Node 26.5.1 and npm 11.17.0**, September 9, 2026.
+These checks need no personal credentials, live database, Redis, or paid model
+call. Package installation requires network access; Prisma may download an engine.
 
-- Node.js 20+
-- npm 10+
-- Docker Engine with Compose support
-- Mistral API key
-
-## Local development
-
-1. Copy `.env.example` to `.env` and fill in the required secrets.
-2. Install backend dependencies:
-   `cd apps/backend && npm install`
-3. Install frontend dependencies:
-   `cd apps/frontend && npm install`
-4. Start infrastructure with Docker:
-   `docker compose up -d postgres redis`
-5. Run Prisma migration:
-   `cd apps/backend && npx prisma migrate deploy --schema src/prisma/schema.prisma`
-6. Start the backend:
-   `cd apps/backend && npm run dev`
-7. Start the frontend:
-   `cd apps/frontend && npm run dev`
-8. Open `http://localhost:5173` for the Vite dev UI or `http://localhost:8080` when running the full container stack.
-
-## Full container stack
-
-Run the full application with:
-
-```bash
-docker compose up --build
-```
-
-The public UI is exposed on `http://localhost:8080`. PostgreSQL and Redis remain internal to the Compose network.
-
-## Environment variables
-
-| Variable | Required | Description |
-| --- | --- | --- |
-| `NODE_ENV` | Yes | `development`, `test`, or `production` |
-| `PORT` | Yes | Backend port |
-| `DATABASE_URL` | Yes | Prisma PostgreSQL connection string |
-| `REDIS_URL` | Yes | Redis connection string |
-| `JWT_SECRET` | Yes | Access-token signing secret |
-| `JWT_REFRESH_SECRET` | Yes | Refresh-token signing secret |
-| `JWT_EXPIRES_IN` | Yes | Access token lifetime, e.g. `15m` |
-| `JWT_REFRESH_EXPIRES_IN` | Yes | Refresh token lifetime, e.g. `7d` |
-| `MISTRAL_API_KEY` | Yes | Mistral API key |
-| `MISTRAL_BASE_URL` | No | Mistral API base URL |
-| `MISTRAL_MODEL` | No | Default model id, e.g. `mistral-large-latest` |
-| `RATE_LIMIT_FREE_DAILY` | Yes | Daily prompt cap for free users |
-| `RATE_LIMIT_PRO_DAILY` | Yes | Daily prompt cap for pro users |
-| `FRONTEND_URL` | Yes | Canonical frontend origin |
-| `CORS_ORIGINS` | Yes | Comma-separated allowed browser origins |
-| `COOKIE_DOMAIN` | No | Cookie domain override; leave blank locally |
-| `ACCESS_COOKIE_NAME` | No | Access-token cookie name |
-| `REFRESH_COOKIE_NAME` | No | Refresh-token cookie name |
-| `CSRF_COOKIE_NAME` | No | CSRF double-submit cookie name |
-| `LOG_LEVEL` | No | Pino log level |
-| `PUBLIC_RATE_LIMIT_WINDOW_MS` | No | Express public rate-limit window |
-| `PUBLIC_RATE_LIMIT_MAX` | No | Express public rate-limit max requests |
-| `API_BASE_PATH` | No | API mount path, defaults to `/api` |
-| `VITE_API_BASE_URL` | Yes for the frontend | Browser-facing API base URL |
-
-## Scripts
-
-### Backend
-
-- `npm run dev`
-- `npm run typecheck`
-- `npm run lint`
-- `npm test`
-- `npm run build`
-
-### Frontend
-
-- `npm run dev`
-- `npm run typecheck`
-- `npm run lint`
-- `npm test`
-- `npm run build`
-
-## Testing
-
-Backend:
+From the repository root:
 
 ```bash
 cd apps/backend
+npm ci --ignore-scripts
+npm run prisma:generate
+npm run lint
+npm run typecheck
 npm test
-```
-
-Frontend:
-
-```bash
-cd apps/frontend
+npm run build
+npm run test:regression
+cd ../frontend
+npm ci --ignore-scripts
+npm run lint
+npm run typecheck
 npm test
-```
-
-## Build for production
-
-Backend:
-
-```bash
-cd apps/backend
 npm run build
 ```
 
-Frontend:
+Observed locally: **25 backend tests, 30 frontend tests, and 12 regression seeds
+passed**, with no flagged regression metrics. These are different checks, not
+67 independent end-to-end scenarios. Backend integration tests exercise HTTP
+routes with mocked database/Redis/provider boundaries. Frontend tests use jsdom,
+not a deployed browser. The test launcher handles the Node 26/Vitest Web Storage
+interaction without removing storage assertions.
 
-```bash
-cd apps/frontend
-npm run build
-```
+Separately, **two real-browser suites passed across 12 English/Arabic scenarios**
+against an isolated PostgreSQL 16.13 database and Redis 8.6.2. Migrations applied;
+one synthetic user and 12 prompt records persisted. A loopback provider sentinel
+recorded **zero model-provider requests**. These checks cover the deterministic
+generation path, not every interactive feature or external model output quality.
 
-## API reference
+The [CI workflow](.github/workflows/ci.yml) documents a service-backed setup and
+runs the same suites with PostgreSQL 16 and Redis 7. **That Linux/service-version
+combination remains unverified for this candidate until its hosted run passes.**
+Do not run destructive setup or test accounts against an existing personal or
+production database. See the validation record for scope and reproduction details.
 
-| Area | Method | Path | Purpose |
-| --- | --- | --- | --- |
-| Auth | `POST` | `/api/auth/register` | Register and set auth cookies |
-| Auth | `POST` | `/api/auth/login` | Login and set auth cookies |
-| Auth | `POST` | `/api/auth/refresh` | Rotate session tokens |
-| Auth | `POST` | `/api/auth/logout` | Invalidate session |
-| Auth | `GET` | `/api/auth/me` | Current user profile |
-| Prompts | `POST` | `/api/prompts/generate` | Generate and store a prompt |
-| Prompts | `GET` | `/api/prompts/history` | Prompt history with filters |
-| Prompts | `GET` | `/api/prompts/:id` | Single prompt lookup |
-| Prompts | `PATCH` | `/api/prompts/:id/favorite` | Toggle favorite |
-| Prompts | `DELETE` | `/api/prompts/:id` | Delete prompt |
-| Prompts | `GET` | `/api/prompts/public` | Public prompt browsing |
-| Collections | `GET` | `/api/collections` | List collections |
-| Collections | `POST` | `/api/collections` | Create collection |
-| Collections | `GET` | `/api/collections/:id` | Collection details |
-| Collections | `PUT` | `/api/collections/:id` | Update collection |
-| Collections | `DELETE` | `/api/collections/:id` | Delete collection |
-| Collections | `POST` | `/api/collections/:id/prompts` | Add prompt to collection |
-| User | `GET` | `/api/user/stats` | Usage metrics |
-| User | `PUT` | `/api/user/profile` | Update display name/language |
-| User | `PUT` | `/api/user/password` | Change password |
-| User | `GET` | `/api/user/quota` | Current quota and reset time |
+## Running the application: configuration boundaries
 
-Swagger documentation is served from `/api/docs`.
+Docker Compose and development scripts are included. **Container deployment was
+not validated in this maintenance review.** Review configuration before use.
 
-## Security notes
+- Never commit real `.env` files. Required settings are listed in `.env.example`.
+- Backend dotenv reads its working directory. Compose passes the root `.env`;
+  npm started inside `apps/backend` does not automatically read that root file.
+- `.env.example` uses `HOST=127.0.0.1` for local development. The default remains
+  `0.0.0.0` for compatibility, and Compose explicitly sets it for container routing.
+- `NODE_ENV=test` deliberately disables server startup. Use `development` for
+  the local HTTP browser-test backend; CI sets this on its startup step only.
+- Compose keeps PostgreSQL/Redis internal. Starting those two containers does not
+  expose them to a host-side backend. Configure separate host services or use the
+  full container network.
+- Compose maps UI port 8080; Vite uses 5173 and preview 4173 by default. Align API
+  URL, CORS, origin, TLS, and cookie settings for the chosen environment.
+- Production-style cookies require deployment-specific review. The HTTP localhost
+  Compose example is not evidence of working production login.
+- Actual Mistral calls need a valid key and may incur charges. Automated checks
+  above do not require one.
 
-- Passwords are hashed with bcrypt cost factor 12
-- Access and refresh JWTs are stored in `httpOnly` cookies
-- CSRF protection uses a double-submit cookie header pattern
-- Helmet is enabled for HTTP hardening
-- CORS is restricted to configured origins
-- Request payload size is limited to 10 KB
-- Prisma parameterizes queries, which protects standard SQL injection paths
+## Security and maintenance status
 
-## Deployment
+The September update fixes user serialization: explicit public-field allowlists
+replace returning full ORM records containing `passwordHash`. Regression
+assertions cover register, login, refresh, current-user, and profile updates.
 
-The provided `deploy.yml` workflow builds backend and frontend images, pushes them to GHCR, and deploys them over SSH.
+The September 9 clean installs and full dependency audits returned **zero reported
+advisories in both packages**. Playwright is pinned to 1.60.0; Vitest and its
+coverage package to 4.1.11. Scoped transitive overrides resolve the deepmerge-ts
+and esbuild findings while retaining Prisma 6; see the reviewer guide for the
+compatibility checks and maintenance caveat. A clean audit is not proof of security.
 
-Required GitHub secrets:
+**Not established:** updated hosted CI for this candidate, paid provider
+integration, Docker builds, or deployment readiness.
+Existing Dockerfiles target Node 20 and need a tested runtime refresh before
+deployment. CI targets the locally tested Node version. Deployment is now manual
+(`workflow_dispatch`), so a portfolio update does not automatically publish
+containers or connect to a server.
 
-- `DEPLOY_HOST`
-- `DEPLOY_USER`
-- `DEPLOY_SSH_KEY`
-- `DEPLOY_PATH`
+## Development approach
 
-The remote server should already contain:
+Maintenance was prepared with Codex assistance: reproduce a failure, add an
+assertion, make a correction, and rerun checks. The code is not presented as
+entirely unaided work.
 
-- a checked-out copy of this repository
-- a populated `.env`
-- Docker with Compose support
-
-## Contributing
-
-1. Create a feature branch.
-2. Keep backend and frontend builds passing.
-3. Run both test suites before opening a pull request.
-4. Document any new environment variables or deployment behavior in this README.
+Existing [outcome evaluation](docs/outcome-eval-harness.md) and
+[v1.1 roadmap](docs/v1.1-roadmap.md) documents describe plans/context, not proof of
+every feature's delivery. No new software license is selected by this update.

@@ -6,9 +6,13 @@ on:
       - "**"
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
   verify:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     services:
       postgres:
         image: postgres:16-alpine
@@ -37,13 +41,15 @@ jobs:
       DATABASE_URL: postgresql://promptforge:promptforge@localhost:5432/promptforge?schema=public
       REDIS_URL: redis://localhost:6379
       NODE_ENV: test
+      HOST: 127.0.0.1
       PORT: 4000
       JWT_SECRET: test-jwt-secret-test-jwt-secret-123456
       JWT_REFRESH_SECRET: test-refresh-secret-test-refresh-secret-123456
       JWT_EXPIRES_IN: 15m
       JWT_REFRESH_EXPIRES_IN: 7d
       MISTRAL_API_KEY: test-mistral-api-key
-      MISTRAL_BASE_URL: https://api.mistral.ai/v1
+      # These suites exercise the deterministic builder, never a paid provider.
+      MISTRAL_BASE_URL: http://127.0.0.1:9/v1
       MISTRAL_MODEL: mistral-large-latest
       RATE_LIMIT_FREE_DAILY: 20
       RATE_LIMIT_PRO_DAILY: 500
@@ -59,13 +65,14 @@ jobs:
       API_BASE_PATH: /api
       VITE_API_BASE_URL: http://localhost:4000/api
       PLAYWRIGHT_BASE_URL: http://localhost:4173
+      PROMPTFORGE_E2E_SCREENSHOT_DIR: /tmp/promptforge-e2e-screenshots
 
     steps:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: "26.5.1"
           cache: npm
           cache-dependency-path: |
             apps/backend/package-lock.json
@@ -86,6 +93,10 @@ jobs:
       - name: Apply Prisma migrations
         working-directory: apps/backend
         run: npm run prisma:migrate:deploy
+
+      - name: Generate Prisma client
+        working-directory: apps/backend
+        run: npm run prisma:generate
 
       - name: Lint backend
         working-directory: apps/backend
@@ -111,6 +122,10 @@ jobs:
         working-directory: apps/frontend
         run: npm test
 
+      - name: Check deterministic prompt regression baseline
+        working-directory: apps/backend
+        run: npm run test:regression
+
       - name: Build backend
         working-directory: apps/backend
         run: npm run build
@@ -121,6 +136,8 @@ jobs:
 
       - name: Start backend
         working-directory: apps/backend
+        env:
+          NODE_ENV: development
         run: npm run start > /tmp/promptforge-backend.log 2>&1 &
 
       - name: Start frontend preview
@@ -164,3 +181,4 @@ jobs:
             /tmp/promptforge-ui-enhancement.json
             /tmp/promptforge-backend.log
             /tmp/promptforge-frontend.log
+            /tmp/promptforge-e2e-screenshots

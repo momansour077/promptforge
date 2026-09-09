@@ -9,6 +9,7 @@ import { Card } from "../components/ui/card";
 import { Input } from "../components/ui/input";
 import { Select } from "../components/ui/select";
 import { useAuth } from "../hooks/useAuth";
+import { uiAction } from "../utils/uiAction";
 import { userService } from "../services/userService";
 import type { StatsPayload } from "../types";
 
@@ -17,7 +18,7 @@ const getErrorMessage = (error: unknown, fallback: string): string => {
     typeof error === "object" &&
     error !== null &&
     "message" in error &&
-    typeof (error as { message: unknown }).message === "string"
+    typeof (error).message === "string"
   ) {
     return (error as { message: string }).message;
   }
@@ -64,7 +65,7 @@ export const SettingsPage = () => {
   }, [user]);
 
   const usageRatio =
-    quota && quota.limit ? Math.min((quota.used / quota.limit) * 100, 100) : 0;
+    quota?.limit ? Math.min((quota.used / quota.limit) * 100, 100) : 0;
 
   return (
     <section className="space-y-6">
@@ -97,7 +98,7 @@ export const SettingsPage = () => {
           <Button
             type="button"
             disabled={savingProfile}
-            onClick={async () => {
+            onClick={uiAction(async () => {
               setSavingProfile(true);
 
               try {
@@ -108,7 +109,7 @@ export const SettingsPage = () => {
               } finally {
                 setSavingProfile(false);
               }
-            }}
+            }, t("errors.generic"))}
           >
             {t("common.update")}
           </Button>
@@ -143,7 +144,7 @@ export const SettingsPage = () => {
           <Button
             type="button"
             disabled={savingPassword}
-            onClick={async () => {
+            onClick={uiAction(async () => {
               setSavingPassword(true);
 
               try {
@@ -159,7 +160,7 @@ export const SettingsPage = () => {
               } finally {
                 setSavingPassword(false);
               }
-            }}
+            }, t("errors.generic"))}
           >
             {t("common.update")}
           </Button>
