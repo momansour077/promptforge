@@ -15,8 +15,10 @@ process.env.MISTRAL_BASE_URL =
   process.env.MISTRAL_BASE_URL ?? "https://api.mistral.ai/v1";
 process.env.MISTRAL_MODEL =
   process.env.MISTRAL_MODEL ?? "mistral-large-latest";
-process.env.RATE_LIMIT_FREE_DAILY = process.env.RATE_LIMIT_FREE_DAILY ?? "2";
-process.env.RATE_LIMIT_PRO_DAILY = process.env.RATE_LIMIT_PRO_DAILY ?? "5";
+// These are fixed fixtures used by quota assertions, not deployment defaults.
+// Do not inherit the larger quotas used by the separate live browser-test server.
+process.env.RATE_LIMIT_FREE_DAILY = "2";
+process.env.RATE_LIMIT_PRO_DAILY = "5";
 process.env.FRONTEND_URL = process.env.FRONTEND_URL ?? "http://localhost:5173";
 process.env.CORS_ORIGINS = process.env.CORS_ORIGINS ?? "http://localhost:5173";
 process.env.COOKIE_DOMAIN = process.env.COOKIE_DOMAIN ?? "localhost";
