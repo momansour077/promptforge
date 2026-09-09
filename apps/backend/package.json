@@ -47,7 +47,13 @@
     "zod": "^3.24.3"
   },
   "overrides": {
-    "qs": "6.16.0"
+    "qs": "6.16.0",
+    "@prisma/config": {
+      "deepmerge-ts": "8.0.0"
+    },
+    "tsx": {
+      "esbuild": "0.28.1"
+    }
   },
   "devDependencies": {
     "@eslint/js": "^9.24.0",

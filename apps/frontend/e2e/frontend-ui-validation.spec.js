@@ -1,4 +1,5 @@
 import fs from "node:fs";
+import path from "node:path";
 
 import { expect, test } from "@playwright/test";
 
@@ -242,6 +243,18 @@ test("frontend prompt generation stays polished across multiline English and Ara
         .filter((value) => value.length > 0)
     )).filter(Boolean);
     const quality = scoreScenario(promptText, spanTexts, scenario.expected);
+
+    // Optional evidence from synthetic test accounts; never capture a user's session.
+    if (process.env.PROMPTFORGE_E2E_SCREENSHOT_DIR) {
+      fs.mkdirSync(process.env.PROMPTFORGE_E2E_SCREENSHOT_DIR, { recursive: true });
+      await page.screenshot({
+        path: path.join(process.env.PROMPTFORGE_E2E_SCREENSHOT_DIR, `${scenario.id}.png`),
+        fullPage: true
+      });
+      await page.screenshot({
+        path: path.join(process.env.PROMPTFORGE_E2E_SCREENSHOT_DIR, `${scenario.id}-viewport.png`)
+      });
+    }
 
     report.push({
       id: scenario.id,

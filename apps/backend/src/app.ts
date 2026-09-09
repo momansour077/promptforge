@@ -87,8 +87,8 @@ const start = async (): Promise<void> => {
   await prisma.$connect();
   await connectRedis();
 
-  const server = app.listen(env.PORT, () => {
-    logger.info({ port: env.PORT }, "PromptForge backend is listening");
+  const server = app.listen(env.PORT, env.HOST, () => {
+    logger.info({ host: env.HOST, port: env.PORT }, "PromptForge backend is listening");
   });
 
   const shutdown = async (): Promise<void> => {

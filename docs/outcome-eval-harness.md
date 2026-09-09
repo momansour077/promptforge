@@ -11,10 +11,11 @@ The browser suites already cover prompt artifact quality. This harness covers do
 
 ## Script
 
-Run:
+Run from the repository root. Unlike the deterministic test suites, this command
+contacts an external model provider and may incur charges. It was **not run in the
+September 9 maintenance review**. Use only an approved budget and synthetic data.
 
 ```bash
-cd /Users/mohamedmansour/promptforge
 node --env-file=.env scripts/evaluate-generated-prompts.mjs
 ```
 
@@ -90,19 +91,20 @@ This is useful for fast iteration, but it is not the final state. The next upgra
 
 ## Recommended Workflow
 
-1. Relaunch PromptForge from the desktop icon.
-2. Run:
+1. Start an isolated, configured PromptForge backend and frontend. A personal
+   desktop launcher is not required and is not part of this repository.
+2. From the repository root, run:
 
 ```bash
-cd /Users/mohamedmansour/promptforge/apps/frontend
+cd apps/frontend
 npm run test:e2e
 npm run test:e2e:enhancement
 ```
 
-3. Run:
+3. Only with an approved model budget, return to the repository root and run:
 
 ```bash
-cd /Users/mohamedmansour/promptforge
+cd ../..
 node --env-file=.env scripts/evaluate-generated-prompts.mjs
 ```
 

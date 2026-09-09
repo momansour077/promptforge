@@ -1,7 +1,7 @@
 #!/usr/bin/env ts-node
 
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
-import { dirname, join, resolve } from "node:path";
+import { dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import {
@@ -105,7 +105,13 @@ const loadBaseline = (): PromptSnapshotBaseline | null => {
 };
 
 const writeReport = (report: RegressionReport): void => {
-  writeFileSync(reportPath, `${JSON.stringify(report, null, 2)}\n`, "utf8");
+  // Reports may be committed or uploaded as CI artifacts. Keep workstation paths private.
+  const publicReport = {
+    ...report,
+    baselinePath: relative(repoRoot, report.baselinePath).split("\\").join("/"),
+    reportPath: relative(repoRoot, report.reportPath).split("\\").join("/")
+  };
+  writeFileSync(reportPath, `${JSON.stringify(publicReport, null, 2)}\n`, "utf8");
 };
 
 const renderTable = (results: SeedRegressionResult[]): string => {
